@@ -94,7 +94,7 @@ if(preg_match("/^[0-9-]+$/", $tempphonenumber)){
 
 //email check
 $tempemail = strtolower($_POST["email"]);
-if(preg_match("/@belk.com/", $tempemail)){
+if(preg_match("/@delk.com/", $tempemail)){
 	$emailError = "Cannot use a BELK email to sign up";
 }else{
 	$email = $tempemail;

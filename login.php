@@ -28,7 +28,7 @@ if(isset($_POST["email"])){
 		die("Connection failed: ". $conn->connect_error);
 	}
 
-	if(preg_match("/@belk.com/", $email)){
+	if(preg_match("/@delk.com/", $email)){
 		$smt = $conn->prepare("Select fname, lname from Employee where email=? and password=?");
 	    $smt->bind_param("ss", $email, $passwordHashed);
 		$smt->execute();

@@ -155,7 +155,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<?php 
 					if(isset($_SESSION["firstName"])){
 						echo '<li class="grid"><a href="member.php">Account</a> </li>';
-						echo '<div style="margin-top: 1%; margin-left: 100%;"> Welcome ' . $_SESSION["firstName"] . ' ' . $_SESSION["lastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ;
+						echo '<div style="margin-top: 1%; margin-left: 100%;"> Welcome Customer ' . $_SESSION["firstName"] . ' ' . $_SESSION["lastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ;
+					}else if(isset($_SESSION["employeefirstName"])){
+						echo '<li class="grid"><a href="member.php">Employee Dashboard </a> </li>';
+						echo '<div style="margin-top: 1%; margin-left: 100%;"> Welcome Employee ' . $_SESSION["employeefirstName"] . ' ' . $_SESSION["employeelastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ; 
 					}else{
 						echo '<div style="margin-top: 7%; margin-left: 80%;"> <a href="account.php">Sign Up</a>	or  <a href="login.php">Log In</a></div>';
 					}

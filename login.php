@@ -28,7 +28,7 @@ if(isset($_POST["email"])){
 		die("Connection failed: ". $conn->connect_error);
 	}
 
-	if(preg_match("/@belk.com/", $tempemail)){
+	if(preg_match("/@belk.com/", $email)){
 		$smt = $conn->prepare("Select fname, lname from Employee where email=? and password=?");
 	    $smt->bind_param("ss", $email, $passwordHashed);
 		$smt->execute();
@@ -38,9 +38,9 @@ if(isset($_POST["email"])){
 			$smt->fetch();
 			$smt->close();
 	    	$conn->close();
-	    	$_SESSION['firstName'] = $fname;
-	    	$_SESSION['lastName'] = $lname;
-	    	$_SESSION['email'] = $email;
+	    	$_SESSION['employeefirstName'] = $fname;
+	    	$_SESSION['employeelastName'] = $lname;
+	    	$_SESSION['employeeEmail'] = $email;
 	    	header('Location: index.php');
 	    	exit;
 		}else{

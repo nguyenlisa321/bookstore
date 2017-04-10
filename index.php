@@ -160,7 +160,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						echo '<li class="grid"><a style="width: 130px; height: 97px;" href="member.php">Employee Dashboard </a> </li>';
 						echo '<div style="margin-top: 3%; margin-left: 80%;"> Welcome Employee ' . $_SESSION["employeefirstName"] . ' ' . $_SESSION["employeelastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ; 
 					}else{
-						echo '<div style="margin-top: 7%; margin-left: 100%;"> <a href="account.php">Sign Up</a>	or  <a href="login.php">Log In</a></div>';
+						echo '<div style="margin-top: 5.5%; margin-left: 50%;"> <a href="account.php">Sign Up</a>	or  <a href="login.php">Log In</a></div>';
 					}
 					?>
 					<!--<li class="grid"><a href="account.php">Sign Up</a>

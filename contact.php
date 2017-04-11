@@ -4,10 +4,13 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
-<title>DELK's Books A Ecommerce Category Flat Bootstarp Resposive Website Template | Contact :: w3layouts</title>
+<title>DELK's Books: The best online shop to find your books</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <!-- Custom Theme files -->
 <!--theme style-->
@@ -28,25 +31,38 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script>$(document).ready(function(){$(".memenu").memenu();});</script>	
 <!-- /start menu -->
 </head>
-<body>
+<body> 
 <!--header-->	
+<script src="js/responsiveslides.min.js"></script>
+<script>  
+    $(function () {
+      $("#slider").responsiveSlides({
+      	auto: true,
+      	nav: true,
+      	speed: 500,
+        namespace: "callbacks",
+        pager: false,
+      });
+    });
+  </script>
+  
 <div class="header-top">
 	 <div class="header-bottom">			
 				<div class="logo">
-					<h1><a href="index.html">DELK's Books</a></h1>
-					
+					<h1><a href="index.php">DELK's Books</a></h1>					
 				</div>
 			 <!---->		 
 			 <div class="top-nav">
-				<ul class="memenu skyblue"><li><a href="index.html">Home</a></li>
-					<li class="grid"><a href="#">Products</a>
-						<div class="mepanel">
+				<ul class="memenu skyblue" style="width: 120%""><li class="active"><a href="index.php">Home</a></li>
+					<li class="grid"><a href="#">Books</a>
+						<!--div class="mepanel">
 							<div class="row">
 								<div class="col1 me-one">
 									<h4>Shop</h4>
 									<ul>
 										<li><a href="product.html">New Arrivals</a></li>
 										<li><a href="product.html">Home</a></li>
+									
 										<li><a href="product.html">Decorates</a></li>
 										<li><a href="product.html">Accessories</a></li>
 										<li><a href="product.html">Kids</a></li>
@@ -81,24 +97,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</div>
 							</div>
 						</div>
-					</li>
-					<li class="grid"><a href="#">Accessories</a>
-						<div class="mepanel">
+					</li-->
+					<li class="grid"><a href="#">Genres</a>
+						<div class="mepanel" style="width: 115px; margin-left: 160px;">
 							<div class="row">
 								<div class="col1 me-one">
-									<h4>Shop</h4>
+									
 									<ul>
-										<li><a href="product.html">New Arrivals</a></li>
-										<li><a href="product.html">Home</a></li>
-										<li><a href="product.html">Decorates</a></li>
-										<li><a href="product.html">Accessories</a></li>
-										<li><a href="product.html">Kids</a></li>
-										<li><a href="product.html">Login</a></li>
-										<li><a href="product.html">Brands</a></li>
-										<li><a href="product.html">My Shopping Bag</a></li>
+										<li><a href="product.html">Fiction</a></li>
+										<li><a href="product.html">Non-Fiction</a></li>
+										<li><a href="product.html">Children</a></li>
+										<li><a href="product.html">Lifestyle</a></li>
+										<li><a href="product.html">Textbook</a></li>
+										
 									</ul>
 								</div>
-								<div class="col1 me-one">
+								<!--div class="col1 me-one">
 									<h4>Type</h4>
 									<ul>
 										<li><a href="product.html">Diwali Lights</a></li>
@@ -119,18 +133,44 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<li><a href="product.html">Jaguar</a></li>
 										<li><a href="product.html">Ave</a></li>
 										<li><a href="product.html">Gold Medal</a></li>
-										<li><a href="product.html">Anchor</a></li>
+										<li><a href="product.html">Anchor</a></li>										
 									</ul>	
-								</div>
+								</div-->
 							</div>
 						</div>
 					</li>
-					<li class="grid"><a href="typo.html">Typo</a></li>
-					<li class="active"><a href="contact.html">Contact</a></li>
-				</ul>
-				<div class="clearfix"> </div>
+					<!--li class="grid"><a href="typo.html">Typo</a></li-->
+					<li class="grid"><a href="contact.html">About</a>
+					<div class="mepanel" style="width: 115px; margin-left: 265px;">
+							<div class="row">
+								<div class="col1 me-one">	
+									<ul>
+										<li><a href="product.html">Contact</a></li>
+										<li><a href="product.html">About Us</a></li>
+									</ul>
+								</div>
+								</div>
+								</div>
+					</li>	
+					<?php 
+					if(isset($_SESSION["firstName"])){
+						echo '<li class="grid"><a href="member.php">Account</a> </li>';
+						echo '<div style="margin-top: 3%; margin-left: 80%;"> Welcome Customer ' . $_SESSION["firstName"] . ' ' . $_SESSION["lastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ;
+					}else if(isset($_SESSION["employeefirstName"])){
+						echo '<li class="grid"><a style="width: 130px; height: 97px;" href="member.php">Employee Dashboard </a> </li>';
+						echo '<div style="margin-top: 3%; margin-left: 80%;"> Welcome Employee ' . $_SESSION["employeefirstName"] . ' ' . $_SESSION["employeelastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ; 
+					}else{
+						echo '<div style="margin-top: 5.5%; margin-left: 50%;"> <a href="account.php">Sign Up</a>	or  <a href="login.php">Log In</a></div>';
+					}
+					?>
+					<!--<li class="grid"><a href="account.php">Sign Up</a>
+					</li>
+					<li class="grid"><a href="login.html">Log In</a>
+					</li>-->
+				</ul>				
 			 </div>
 			 <!---->
+
 			 <div class="cart box_1">
 				 <a href="checkout.html">
 					<div class="total">

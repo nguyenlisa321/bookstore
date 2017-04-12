@@ -187,6 +187,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="clearfix"> </div>
 </div>
 <!---->	
+<div class="contact">
+	  <div class="container">
+		<?php 
+		echo '<h2 class> Hello <span>' . $_SESSION["firstName"] . '</span> </h2>  ' ;
+		?>
+		<p>Below, you may look at your purchase history or edit your personal information.</p>					
+	</div>
+</div>
+
+
 <!---->
 <!---->
 <!---->

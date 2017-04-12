@@ -264,7 +264,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 					</li>
 					<!--li class="grid"><a href="typo.html">Typo</a></li-->
-					<li class="grid"><a href="contact.html">About</a>
+					<li class="grid"><a href="about.php">About</a>
+					<!--
 					<div class="mepanel" style="width: 115px; margin-left: 265px;">
 							<div class="row">
 								<div class="col1 me-one">	
@@ -274,8 +275,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									</ul>
 								</div>
 								</div>
-								</div>
-					</li>	
+								</div>-->
+					</li>
 					<div style="margin-top: 7%; margin-left: 80%;"> <a href="account.php">Sign Up</a>	or  <a href="login.php">Log In</a></div>
 					<!--<li class="grid"><a href="account.php">Sign Up</a>
 					</li>
@@ -522,11 +523,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li><a href="#">Best Reviewed</a></li>	
 					</ul>					
 			 </div>
-			 <div class="col-md-3 ftr-grid">
+			<div class="col-md-3 ftr-grid">
 					<h3>More Info</h3>
 					<ul class="nav-bottom">
-						<li><a href="login.php">Login</a></li>
-						<li><a href="contact.html">Contact</a></li>
+					  <?php
+				if(isset($_SESSION['employeefirstName']) || isset($_SESSION['firstName'])){
+				}else{	
+				echo	'<li><a href="login.php">Login</a></li>';
+			 }
+			 ?>
+						<li><a href="about.php">About</a></li>
 					</ul>					
 			 </div>
 			 <div class="col-md-3 ftr-grid">

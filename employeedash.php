@@ -1,80 +1,17 @@
-<!--A Design by W3layouts 
-Author: W3layout
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
 <?php
 session_start();
-$generalError = "";
-$loggedOut = "";
-
-if(isset($_GET['logout'])){
+if(!isset($_SESSION['employeefirstName'])){
 	session_unset();
 	session_destroy();
-	$loggedOut = "You have succesfully been logged out.";
+	header('Location: login.php');
+	exit();
 }
 
-if(isset($_POST["email"])){
-	$email = strtolower($_POST["email"]);
-	$passwordHashed = hash("md5", $_POST["password"]);
-	$servername = "stardock.cs.virginia.edu";
-	$username = "cs4750s17elk2fw";
-	$serverpassword ="cs4750";
-	$dbname = "cs4750s17elk2fw";
-
-	$conn = new mysqli($servername, $username, $serverpassword, $dbname);
-	if($conn->connect_error){
-		die("Connection failed: ". $conn->connect_error);
-	}
-
-	if(preg_match("/@delk.com/", $email)){
-		$smt = $conn->prepare("Select fname, lname from Employee where email=? and password=?");
-	    $smt->bind_param("ss", $email, $passwordHashed);
-		$smt->execute();
-		$smt->store_result();
-		if($smt->num_rows > 0){
-			$smt->bind_result($fname, $lname);
-			$smt->fetch();
-			$smt->close();
-	    	$conn->close();
-	    	$_SESSION['employeefirstName'] = $fname;
-	    	$_SESSION['employeelastName'] = $lname;
-	    	$_SESSION['employeeEmail'] = $email;
-	    	header('Location: employeedash.php');
-	    	exit;
-		}else{
-			$generalError = "Invalid email/password.";
-			$smt->close();
-	    	$conn->close();
-		}
-	}else{
-		$smt = $conn->prepare("Select fname, lname from Customer where email=? and password=?");
-	    $smt->bind_param("ss", $email, $passwordHashed);
-		$smt->execute();
-		$smt->store_result();
-		if($smt->num_rows > 0){
-			$smt->bind_result($fname, $lname);
-			$smt->fetch();
-			$smt->close();
-	    	$conn->close();
-	    	$_SESSION['firstName'] = $fname;
-	    	$_SESSION['lastName'] = $lname;
-	    	$_SESSION['email'] = $email;
-	    	header('Location: member.php');
-	    	exit;
-		}else{
-			$generalError = "Invalid email/password.";
-			$smt->close();
-	    	$conn->close();
-		}
-	}
-}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-<title>DELK's Books A Ecommerce Category Flat Bootstarp Resposive Website Template | Login :: w3layouts</title>
+<title>DELK's Books: The best online shop to find your books</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <!-- Custom Theme files -->
 <!--theme style-->
@@ -101,7 +38,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script>  
     $(function () {
       $("#slider").responsiveSlides({
-      	auto: false,
+      	auto: true,
       	nav: true,
       	speed: 500,
         namespace: "callbacks",
@@ -113,11 +50,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="header-top">
 	 <div class="header-bottom">			
 				<div class="logo">
-					<h1><a href="index.php">DELK's Books</a></h1>
+					<h1><a href="index.php">DELK's Books</a></h1>					
 				</div>
 			 <!---->		 
 			 <div class="top-nav">
-				<ul class="memenu skyblue"><li class="active"><a href="index.php">Home</a></li>
+				<ul class="memenu skyblue" style="width: 120%""><li class="active"><a href="index.php">Home</a></li>
 					<li class="grid"><a href="#">Books</a>
 						<!--div class="mepanel">
 							<div class="row">
@@ -216,8 +153,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</div>
 								</div>
 								</div>-->
-					</li>
-					<div style="margin-top: 7%; margin-left: 80%;"> <a href="account.php">Sign Up</a>	or  <a href="login.php">Log In</a></div>
+					</li>	
+					<?php 
+					if(isset($_SESSION["firstName"])){
+						echo '<li class="grid"><a href="member.php">Account</a> </li>';
+						echo '<div style="margin-top: 3%; margin-left: 80%;"> Welcome Customer ' . $_SESSION["firstName"] . ' ' . $_SESSION["lastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ;
+					}else if(isset($_SESSION["employeefirstName"])){
+						echo '<li class="grid"><a style="width: 130px; height: 97px;" href="employeedash.php">Employee Dashboard </a> </li>';
+						echo '<div style="margin-top: 3%; margin-left: 80%;"> Welcome Employee ' . $_SESSION["employeefirstName"] . ' ' . $_SESSION["employeelastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ; 
+					}else{
+						echo '<div style="margin-top: 5.5%; margin-left: 50%;"> <a href="account.php">Sign Up</a>	or  <a href="login.php">Log In</a></div>';
+					}
+					?>
 					<!--<li class="grid"><a href="account.php">Sign Up</a>
 					</li>
 					<li class="grid"><a href="login.html">Log In</a>
@@ -225,6 +172,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</ul>				
 			 </div>
 			 <!---->
+
 			 <div class="cart box_1">
 				 <a href="checkout.html">
 					<div class="total">
@@ -240,38 +188,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="clearfix"> </div>
 </div>
 <!---->	
-<div class="login_sec">
-	 <div class="container">
-		 <ol class="breadcrumb">
-		  <li><a href="index.php">Home</a></li>
-		  <li class="active">Login</li>
-		 </ol>
-		 <h2>Login</h2>
-		 <?php
-			if(isset($_SESSION["login"])){			
-			echo '<p> <span style="color: red;">'.$_SESSION['login'].'</span> </p>'; 
-			unset($_SESSION["login"]);
-			}
-			echo '<p> <span style="color: red;">'.$loggedOut.'</span> </p>';
-		?>
-		 <div class="col-md-6 log">			 
-				 <p>Welcome, please enter the following to continue.</p>
-				 <?php echo '<span style="color: red;">'.$generalError.'</span>'?>
-				 <form action = "login.php" method = "post"> 
-					 <h5>Email</h5>	
-					 <input type="email" name="email" value="" required>
-					 <h5>Password</h5>
-					 <input type="password" name="password" value="" required>					
-					 <input type="submit" value="Login">	
-						<a class="acount-btn" href="account.php">Create an Account</a>
-				 </form>
-				 <a href="#">Forgot Password ?</a>
-					
-		 </div>	
-				
-		 <div class="clearfix"></div>
-	 </div>
-</div>
+
+<!---->
+
 <!---->
 <!--<div class="subscribe">
 	 <div class="container">

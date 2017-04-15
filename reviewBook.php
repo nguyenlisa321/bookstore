@@ -8,6 +8,7 @@ if(!isset($_SESSION['firstName'])){
 	exit();
 }
 
+if(!isset($_POST["reviewtext"])){
 $servername = "stardock.cs.virginia.edu";
 $username = "cs4750s17elk2fw";
 $serverpassword ="cs4750";
@@ -18,31 +19,46 @@ if($conn->connect_error){
 	die("Connection failed: ". $conn->connect_error);
 }
 $email = $_SESSION['email'];
-$sql = "Select fname, lname, address, city, state, zipcode, phonenumber from Customer where email = '$email'" ;
+$sql = "Select DISTINCT ISBN, Title FROM Books NATURAL JOIN (SELECT ISBN FROM PlacesOrder where ISBN NOT IN(SELECT ISBN FROM Reviews where email = '$email') AND email = '$email') AS table_2" ;
+
 $result = $conn->query($sql);
+if($result->num_rows==0){
+	$conn->close();
+	header('Location: member.php');
+	exit();
+}
+}else{
+	$servername = "stardock.cs.virginia.edu";
+	$username = "cs4750s17elk2fw";
+	$serverpassword ="cs4750";
+	$dbname = "cs4750s17elk2fw";
 
-$row = mysqli_fetch_assoc($result);
+	$conn = new mysqli($servername, $username, $serverpassword, $dbname);
+	if($conn->connect_error){
+		die("Connection failed: ". $conn->connect_error);
+	}
 
-$fname = $row["fname"];
-$lname = $row["lname"];
-$address = $row["address"];
-$city = $row["city"];
-$zipcode = $row["zipcode"];
-$state = $row["state"];
-$phonenumber= $row["phonenumber"];
+	date_default_timezone_set('EST');
+	$date = date("Y-m-d");
 
+	$smt = $conn->prepare("INSERT INTO Reviews (email, ISBN, review_text, rating, review_date) VALUES (?,?,?,?,?) " );
+    $smt->bind_param("sssis", $_SESSION["email"], $_POST["bookISBN"], $_POST["reviewtext"], $_POST["rating"], $date);
+    $smt->execute();
+    $smt->close();
+    $conn->close();
+    header( 'Location: member.php' ) ;
+    exit();
+}
 
-mysqli_close($conn);
 ?>
-
 
 <!DOCTYPE html>
 <html>
 <head>
-<title>DELK's Books: The best online shop to find your books</title>
+<title>DELK's Books A Ecommerce Category Flat Bootstarp Resposive Website Template | Account :: w3layouts</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <!-- Custom Theme files -->
-<!--theme style-->
+<!--theme-style-->
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />	
 <script src="js/jquery.min.js"></script>
 
@@ -66,7 +82,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script>  
     $(function () {
       $("#slider").responsiveSlides({
-      	auto: true,
+      	auto: false,
       	nav: true,
       	speed: 500,
         namespace: "callbacks",
@@ -74,8 +90,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       });
     });
   </script>
-  
-<div class="header-top">
+ <div class="header-top">
 	 <div class="header-bottom">			
 				<div class="logo">
 					<h1><a href="index.php">DELK's Books</a></h1>					
@@ -216,72 +231,164 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="clearfix"> </div>
 </div>
 <!---->	
+<style type="text/css">
+    #wrapper {
+        width:450px;
+        margin:0 auto;
+        font-family:Verdana, sans-serif;
+    }
+    legend {
+        color:#FF851B;
+        font-size:16px;
+        padding:0 10px;
+        background:#fff;
+        -moz-border-radius:4px;
+        box-shadow: 0 1px 5px rgba(4, 129, 177, 0.5);
+        padding:5px 10px;
+        text-transform:uppercase;
+        font-family:Helvetica, sans-serif;
+        font-weight:bold;
+    }
+    fieldset {
+        border-radius:4px;
+        background: #fff; 
+        background: -moz-linear-gradient(#fff, #f9fdff);
+        background: -o-linear-gradient(#fff, #f9fdff);
+        background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#f9fdff)); /
+        background: -webkit-linear-gradient(#fff, #f9fdff);
+        padding:20px;
+        border-color:rgba(4, 129, 177, 0.4);
+    }
+    input,
+    textarea {
+        color: #373737;
+        background: #fff;
+        border: 1px solid #CCCCCC;
+        color: #aaa;
+        font-size: 14px;
+        line-height: 1.2em;
+        margin-bottom:15px;
+
+        -moz-border-radius:4px;
+        -webkit-border-radius:4px;
+        border-radius:4px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    input[type="text"],
+    input[type="password"]{
+        padding: 8px 6px;
+        height: 22px;
+        width:280px;
+    }
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+        background:#f5fcfe;
+        text-indent: 0;
+        z-index: 1;
+        color: #373737;
+        -webkit-transition-duration: 400ms;
+        -webkit-transition-property: width, background;
+        -webkit-transition-timing-function: ease;
+        -moz-transition-duration: 400ms;
+        -moz-transition-property: width, background;
+        -moz-transition-timing-function: ease;
+        -o-transition-duration: 400ms;
+        -o-transition-property: width, background;
+        -o-transition-timing-function: ease;
+        width: 380px;
+        
+        border-color:#ccc;
+        box-shadow:0 0 5px rgba(4, 129, 177, 0.5);
+        opacity:0.6;
+    }
+    input[type="submit"]{
+        background: #222;
+        border: none;
+        text-shadow: 0 -1px 0 rgba(0,0,0,0.3);
+        text-transform:uppercase;
+        color: #eee;
+        cursor: pointer;
+        font-size: 15px;
+        margin: 5px 0;
+        padding: 5px 22px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        -webkit-border-radius:4px;
+        -webkit-box-shadow: 0px 1px 2px rgba(0,0,0,0.3);
+        -moz-box-shadow: 0px 1px 2px rgba(0,0,0,0.3);
+        box-shadow: 0px 1px 2px rgba(0,0,0,0.3);
+    }
+    textarea {
+        padding:3px;
+        width:96%;
+        height:100px;
+    }
+    textarea:focus {
+        background:#ebf8fd;
+        text-indent: 0;
+        z-index: 1;
+        color: #373737;
+        opacity:0.6;
+        box-shadow:0 0 5px rgba(4, 129, 177, 0.5);
+        border-color:#ccc;
+    }
+    .small {
+        line-height:14px;
+        font-size:12px;
+        color:#999898;
+        margin-bottom:3px;
+    }
+</style>
+<br></br>
 <div class="contact">
-	  <div class="container">
-		<?php 
-		echo '<h2 class> Hello <span>' . $_SESSION["firstName"] . '</span> </h2>  ' ;
-		?>
-		<p>Below, edit your personal information, look at your purchase history, or write a review for a book.</p>		
-		<br></br>
-		<p><font size = "5px"> <u>Personal Information:</u></font>
-			<br></br>
-			<div class = "boxed">
-			<b><font size="3px"> First Name: </b><?php echo "$fname" ; ?></font>
-			<span style="margin-left: 3em;"><b><font size="3px"> Last Name: </b><?php echo "$lname" ; ?></font></span>
-			<br></br>
-			<b><font size="3px"> Street Address: </b><?php echo "$address" ; ?></font> 
-			<br></br>
-			<b><font size="3px"> City: </b><?php echo "$city" ; ?></font>
-			<br></br>
-			<b><font size="3px"> State: </b><?php echo "$state" ; ?></font> 
-			<span style="margin-left: 3em;"><b><font size="3px"> Zip Code: </b><?php echo "$zipcode" ; ?></font></span>
-			<br></br>
-			<b><font size="3px"> Phone Number: </b><?php echo "$phonenumber" ; ?></font>
-			<br></br>
-			<h1><a href="modifyPersonal.php"><span class="label label-info">Modify Personal Information</span></a></h1>
-			</div>
-		</p>
-		<hr COLOR="black" NOSHADE></hr>
-		<p><font size = "5px"><u> Order History:</u></font>
-		<br></br>
-		<?php
-			$servername = "stardock.cs.virginia.edu";
-			$username = "cs4750s17elk2fw";
-			$serverpassword ="cs4750";
-			$dbname = "cs4750s17elk2fw";
+<div class="container">
+<body>
+    <div id="wrapper">
+        <form action="reviewBook.php" method="post">
+            <fieldset>
+                <legend>Write a Review </legend>
+                <br>
+                <div>
+				Book Title: 
+				<select name = "bookISBN">
+                <?php 
+                $servername = "stardock.cs.virginia.edu";
+				$username = "cs4750s17elk2fw";
+				$serverpassword ="cs4750";
+				$dbname = "cs4750s17elk2fw";
 
-			$conn = new mysqli($servername, $username, $serverpassword, $dbname);
-			if($conn->connect_error){
-				die("Connection failed: ". $conn->connect_error);
-			}
-			$email = $_SESSION['email'];
-			$sql = "Select ISBN, Title, transaction_id, dateTransaction, quantityBought, bookPrice, totalPrice from PlacesOrder Natural Join Books where email = '$email' ORDER BY transaction_id ASC" ;
-			$result = $conn->query($sql);
+				$conn = new mysqli($servername, $username, $serverpassword, $dbname);
+				if($conn->connect_error){
+					die("Connection failed: ". $conn->connect_error);
+				}
+				$email = $_SESSION['email'];
+				$sql = "Select DISTINCT ISBN, Title FROM Books NATURAL JOIN (SELECT ISBN FROM PlacesOrder where ISBN NOT IN(SELECT ISBN FROM Reviews where email = '$email') AND email = '$email') AS table_2" ;
 
-			if ($result->num_rows > 0) {
-    		// output data of each row
-				echo '<table class="table1">';
-				echo '<tr> <th> <u> Transaction ID </u> </th> <th><u> Date </u> </th> <th> <u> Book ISBN </u></th> <th> <u> Book Title </u> </th> <th> <u> Quantity </u> </th> <th> <u> Book Price($USD) </u> </th> <th> <u> Total Price($USD)</tr>';
-	    		while($row = $result->fetch_assoc()) {
-	        		echo '<tr> <td> '. $row['transaction_id'] . ' </td> <td>' . $row['dateTransaction'] . ' </td> <td> ' . $row['ISBN'] . '</td> <td> '. $row['Title'] . ' </td> <td> ' . $row['quantityBought'] . '</td><td>'. $row['bookPrice'] . '</td> <td>' . $row['totalPrice'] . '</td></tr>';
-	   			} 			
-		   		echo '</table>';
-				echo '<br></br>';
-			} else {
-    			echo '<h3> None </h3>';
-    		}
+				$result = $conn->query($sql);
 
-    		if($result->num_rows>0){
-			echo '<h1><a href="reviewBook.php"><span class="label label-info" style="margin-left: 910px;">Review Book(s)</span></a></h1>';
-			}
-
-    		mysqli_close($conn);
-	    ?>
-		</p>
-	</div>
+				while($row = $result->fetch_assoc()){
+					echo '<option value = " ' . $row['ISBN']  . '"/>'  . $row['Title'] . '</option>';
+				}
+                ?>
+                </select>
+				</div>
+				</br>
+			    Rating(0-5): 
+			    <div>
+                    <input type="number" name="rating" placeholder="0" min="0" max="5" required/>
+                </div>
+               	Review Thoughts:
+               	<div>
+                    <div class="small"></div>
+                    <textarea name="reviewtext" placeholder="Message" required></textarea>
+                </div>    
+                <input type="submit" name="submit" value="Confirm"/>
+            </fieldset>    
+        </form>
+    </div>
+</body>
 </div>
-<!---->
-<!---->
+</div>
 <!---->
 <!--<div class="subscribe">
 	 <div class="container">
@@ -309,7 +416,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li><a href="#">Best Reviewed</a></li>	
 					</ul>					
 			 </div>
-			 <div class="col-md-3 ftr-grid">
+			<div class="col-md-3 ftr-grid">
 					<h3>More Info</h3>
 					<ul class="nav-bottom">
 					  <?php

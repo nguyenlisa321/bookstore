@@ -1,9 +1,33 @@
-w/*--A Design by W3layouts 
+/*--A Design by W3layouts 
 Author: W3layout
 Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 --*/
+table.table1{
+    width: 100%;
+    border: 3px solid #00bfff;
+    border-collapse: collapse;
+}
+table.table1 th{
+    border: 3px solid #00bfff;
+    border-collapse: collapse;
+    padding: 10px;
+}
+table.table1 td{
+    border: 3px solid #00bfff;
+    border-collapse: collapse;
+    padding: 10px;
+}
+.boxed{
+    padding: 50px;
+    border: 3px black;
+    display: inline-block;
+    box-shadow: 1px 1px 25px rgba(250, 0, 250, 0.35);
+    width: 700px;
+    height: 360px;
+}
+
 body{
 	background:#fff;
 	font-family: 'Lato', sans-serif;

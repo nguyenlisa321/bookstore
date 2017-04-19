@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 if(!isset($_SESSION['employeefirstName'])){
 	session_unset();
@@ -7,182 +6,18 @@ if(!isset($_SESSION['employeefirstName'])){
 	header('Location: login.php');
 	exit();
 }
-
-$servername = "stardock.cs.virginia.edu";
-$username = "cs4750s17elk2fw";
-$serverpassword ="cs4750";
-$dbname = "cs4750s17elk2fw";
-
-$db = new mysqli($servername, $username, $serverpassword, $dbname);
-if($db->connect_error){
-        die("Connection failed: ". $conn->connect_error);
-}
-
-$errormessage="";
-$successmessage="";
-
-if(isset($_POST["delete"])){
-     $sql = "Delete FROM Books Where ISBN = " . $_POST["bookISBN"] ;
-     if ($db->query($sql) === TRUE) {
-        $successmessage = "Deleted " . $_POST["bookISBN"];
-     } else {
-        $errormessage = "Unsuccesful Delete";
-     }
-}else if(isset($_POST["add"])){
-     $sql = "Select Quantity FROM Books where ISBN = " . $_POST['bookISBN'];
-     $result = $db->query($sql);
-     $row = $result->fetch_assoc();
-     $currentquantity = $row["Quantity"];
-     $newquantity = intval($currentquantity) + intval($_POST['addquantity']);
-     $sql = "Update Books SET Quantity = " . $newquantity . " Where ISBN = " . $_POST['bookISBN'] . "";
-     if ($db->query($sql) === TRUE) {
-        $successmessage = "Increased " . $_POST["bookISBN"] . " by " . $_POST["addquantity"];
-     } else {
-        $errormessage = "Unsuccesful Increase";
-     }   
-}else{
-}
-
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-<script src="js/js/jquery-1.6.2.min.js" type="text/javascript"></script> 
-<script src="js/js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
-<script>
-	$(document).ready(function() {
-		$( "#title" ).click(function() {
-			$.ajax({
-				url: 'searchBook.php', 
-				data: {searchBook: "Title"},
-				success: function(data){
-					$('#booktable').html(data);	
-				
-				}
-			});
-		});
-		
-	});
-	$(document).ready(function() {
-		$( "#author" ).click(function() {
-			$.ajax({
-				url: 'searchBook.php', 
-				data: {searchBook: "Author"},
-				success: function(data){
-					$('#booktable').html(data);	
-				}
-			});
-		});
-		
-	});
-	$(document).ready(function() {
-		$( "#genre" ).click(function() {
-			$.ajax({
-				url: 'searchBook.php', 
-				data: {searchBook: "Genre"},
-				success: function(data){
-					$('#booktable').html(data);	
-				}
-			});
-		});
-		
-	});
-	$(document).ready(function() {
-		$( "#date" ).click(function() {
-			$.ajax({
-				url: 'searchBook.php', 
-				data: {searchBook: "Date"},
-				success: function(data){
-					$('#booktable').html(data);	
-				}
-			});
-		});
-		
-	});
-	$(document).ready(function() {
-		$( "#price" ).click(function() {
-			$.ajax({
-				url: 'searchBook.php', 
-				data: {searchBook: "Price"},
-				success: function(data){
-					$('#booktable').html(data);	
-				}
-			});
-		});
-		
-	});
-	$(document).ready(function() {
-		$( "#quantity" ).click(function() {
-			$.ajax({
-				url: 'searchBook.php', 
-				data: {searchBook: "Quantity"},
-				success: function(data){
-					$('#booktable').html(data);	
-				}
-			});
-		});
-		
-	});
-	$(document).ready(function() {
-		$( "#publisher" ).click(function() {
-			$.ajax({
-				url: 'searchBook.php', 
-				data: {searchBook: "Publisher"},
-				success: function(data){
-					$('#booktable').html(data);	
-				}
-			});
-		});
-		
-	});
-	$(document).ready(function() {
-		$( "#publisherprice" ).click(function() {
-			$.ajax({
-				url: 'searchBook.php', 
-				data: {searchBook: "Publisher_Price"},
-				success: function(data){
-					$('#booktable').html(data);	
-				}
-			});
-		});
-		
-	});
-	/*
-	$(document).ready(function() {
-		$( "#add" ).click(function() {
-			$.ajax({
-				url: 'adddeletebook.php', 
-				data: { ISBN: $("#bookISBN").val(),
-				Quantity: $( "#addquantity" ).val()},
-				success: function(data){
-					$('#adddelete').html(data);	
-				}
-			});
-		});
-		
-	});
-	$(document).ready(function() {
-		$( "#delete" ).click(function() {
-			$.ajax({
-				url: 'adddeletebook.php', 
-				data: {delete: "true", 
-				ISBN: $("#bookISBN").val() },
-				success: function(data){
-					$('#adddelete').html(data);	
-				}
-			});
-		});
-		
-	});*/
-</script>
-
 <title>DELK's Books: The best online shop to find your books</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <!-- Custom Theme files -->
 <!--theme style-->
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />	
 <script src="js/jquery.min.js"></script>
+
 <!--//theme style-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -347,81 +182,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!---->	
 <div class="contact">
 	  <div class="container">
-	  	<h1><u>Book Information Page</u></h1>
-	  	<br></br>
-	  	<div id = "adddelete">
-	  	<h4> Order/delete more books </h4>
-	  	<?php
-	  	echo '<b> ' . $errormessage .'</b>';
-        echo '<b> ' . $successmessage . '</b>';
-        if(isset($errormessage) || isset($successmessage)){
-          echo '<br></br>';
-        }?>
-	  	Title:
-	  	<form action=book.php method = post>
-	  	<select name = "bookISBN">
-                <?php 
-                $servername = "stardock.cs.virginia.edu";
-				$username = "cs4750s17elk2fw";
-				$serverpassword ="cs4750";
-				$dbname = "cs4750s17elk2fw";
-
-				$conn = new mysqli($servername, $username, $serverpassword, $dbname);
-				if($conn->connect_error){
-					die("Connection failed: ". $conn->connect_error);
-				}
-				$sql = "Select ISBN, Title From BookInfo" ;
-
-				$result = $conn->query($sql);
-
-				while($row = $result->fetch_assoc()){
-					echo '<option value = " ' . $row['ISBN']  . '"/>'  . $row['Title'] . '</option>';
-				}
-				$conn->close();
-        		?>
-        </select>
-        <br></br>
-        Quantity:
-        <input type="number" name="addquantity" placeholder="0" min="0" max="1000" required/>
-        <br></br>
-	  	<!--<button id="add">Increase</button>
-	  	<button id="delete">Delete</button>-->
-	  	<button name="add" value="add">Increase</button>
-	  	<button name="delete" value = "delete">Delete</button>
-	  	</form>
-	  	</div>
-	  	<br></br>
-	  	<hr COLOR="black" NOSHADE></hr>
-	  	<br></br>
-		<button id="title">Order by Title</button> <button id="author">Order by Author</button> <button id="genre">Order by Genre</button> <button id="date">Order by Date</button> <button id="price">Order by Book Price</button> <button id="quantity">Order by Quantity</button> <button id="publisher">Order by Publisher</button> <button id="publisherprice">Order by Publisher Price</button>
-		<br></br>
-		<br></br>
-		<div id = "booktable">
-		<?php
-			$servername = "stardock.cs.virginia.edu";
-			$username = "cs4750s17elk2fw";
-			$serverpassword ="cs4750";
-			$dbname = "cs4750s17elk2fw";
-
-			$conn = new mysqli($servername, $username, $serverpassword, $dbname);
-			if($conn->connect_error){
-				die("Connection failed: ". $conn->connect_error);
-			}
-			 $stmt = $conn->stmt_init();
-			  $stmt->prepare("select * from BookInfo");
-			  $stmt->execute();
-	          $stmt->bind_result($isbn, $title, $author, $genre, $date, $binding, $price, $quantity, $publisher, $publisherprice);
-	          echo '<table class = "table1">';
-	          echo '<th>ISBN</th><th>Title</th><th>Author</th><th>Genre</th><th>Date</th><th>Binding</th><th>Price</th><th>Quantity</th><th>Publisher</th><th>Publisher Price</th>';
-	          while($stmt->fetch()) {
-	                    echo "<tr><td>$isbn</td><td>$title</td><td>$author</td><td>$genre</td><td>$date</td><td>$binding</td><td>$price</td><td>$quantity</td><td>$publisher</td><td>$publisherprice</td></tr>";
-	          }
-	         echo '</table>';
-    		$conn->close(); 
-	    ?>
-		</div>
-
-	</div>
+</div>
 </div>
 <!---->
 

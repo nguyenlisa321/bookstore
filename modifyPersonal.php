@@ -40,6 +40,8 @@ $zipcode = $row["zipcode"];
 $state = $row["state"];
 $phonenumber= $row["phonenumber"];
 
+$conn->close();
+
 }else{
 
 $fname="";

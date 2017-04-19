@@ -121,6 +121,7 @@ if(strlen($fnameError)==0 && strlen($lnameError)==0 && strlen($addressError)==0 
     if(!$smt->execute()){
     	$generalError = "The current email is already used with an account. Please enter another email.";
     	$smt->close();
+    	$conn->close();
     }else{
     	$smt->close();
     	$conn->close();

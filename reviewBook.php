@@ -19,14 +19,17 @@ if($conn->connect_error){
 	die("Connection failed: ". $conn->connect_error);
 }
 $email = $_SESSION['email'];
-$sql = "Select DISTINCT ISBN, Title FROM Books NATURAL JOIN (SELECT ISBN FROM PlacesOrder where ISBN NOT IN(SELECT ISBN FROM Reviews where email = '$email') AND email = '$email') AS table_2" ;
+$sql = "SELECT ISBN FROM PlacesOrder where ISBN NOT IN(SELECT ISBN FROM Reviews where email = '$email') AND email = '$email'" ;
 
 $result = $conn->query($sql);
 if($result->num_rows==0){
 	$conn->close();
 	header('Location: member.php');
-	exit();
+	exit;
+}else{
+	$conn->close();
 }
+
 }else{
 	$servername = "stardock.cs.virginia.edu";
 	$username = "cs4750s17elk2fw";
@@ -47,7 +50,7 @@ if($result->num_rows==0){
     $smt->close();
     $conn->close();
     header( 'Location: member.php' ) ;
-    exit();
+    exit;
 }
 
 ?>
@@ -362,13 +365,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					die("Connection failed: ". $conn->connect_error);
 				}
 				$email = $_SESSION['email'];
-				$sql = "Select DISTINCT ISBN, Title FROM Books NATURAL JOIN (SELECT ISBN FROM PlacesOrder where ISBN NOT IN(SELECT ISBN FROM Reviews where email = '$email') AND email = '$email') AS table_2" ;
+				$sql = "Select DISTINCT ISBN, Title FROM Books NATURAL JOIN (SELECT * FROM PlacesOrder where ISBN NOT IN(SELECT ISBN FROM Reviews where email = '$email') AND email = '$email') AS table_2" ;
 
 				$result = $conn->query($sql);
 
 				while($row = $result->fetch_assoc()){
 					echo '<option value = " ' . $row['ISBN']  . '"/>'  . $row['Title'] . '</option>';
 				}
+				$conn->close();
                 ?>
                 </select>
 				</div>

@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 if(!isset($_SESSION['employeefirstName'])){
 	session_unset();
@@ -6,45 +7,119 @@ if(!isset($_SESSION['employeefirstName'])){
 	header('Location: login.php');
 	exit();
 }
-
-$servername = "stardock.cs.virginia.edu";
-$username = "cs4750s17elk2fw";
-$serverpassword ="cs4750";
-$dbname = "cs4750s17elk2fw";
-
-$conn = new mysqli($servername, $username, $serverpassword, $dbname);
-if($conn->connect_error){
-	die("Connection failed: ". $conn->connect_error);
-}
-$email = $_SESSION['employeeEmail'];
-$sql = "Select fname, lname, address, city, state, zipcode, phonenumber, position, salary from Employee where email = '$email'" ;
-$result = $conn->query($sql);
-
-$row = mysqli_fetch_assoc($result);
-
-$fname = $row["fname"];
-$lname = $row["lname"];
-$address = $row["address"];
-$city = $row["city"];
-$zipcode = $row["zipcode"];
-$state = $row["state"];
-$phonenumber= $row["phonenumber"];
-$_SESSION["position"] = $row["position"];
-$salary = $row ["salary"];
-
-$conn->close();
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
+<script src="js/js/jquery-1.6.2.min.js" type="text/javascript"></script> 
+<script src="js/js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
+<script>
+	$(document).ready(function() {
+		$( "#title" ).click(function() {
+			$.ajax({
+				url: 'searchBook.php', 
+				data: {searchBook: "Title"},
+				success: function(data){
+					$('#booktable').html(data);	
+				
+				}
+			});
+		});
+		
+	});
+	$(document).ready(function() {
+		$( "#author" ).click(function() {
+			$.ajax({
+				url: 'searchBook.php', 
+				data: {searchBook: "Author"},
+				success: function(data){
+					$('#booktable').html(data);	
+				}
+			});
+		});
+		
+	});
+	$(document).ready(function() {
+		$( "#genre" ).click(function() {
+			$.ajax({
+				url: 'searchBook.php', 
+				data: {searchBook: "Genre"},
+				success: function(data){
+					$('#booktable').html(data);	
+				}
+			});
+		});
+		
+	});
+	$(document).ready(function() {
+		$( "#date" ).click(function() {
+			$.ajax({
+				url: 'searchBook.php', 
+				data: {searchBook: "Date"},
+				success: function(data){
+					$('#booktable').html(data);	
+				}
+			});
+		});
+		
+	});
+	$(document).ready(function() {
+		$( "#price" ).click(function() {
+			$.ajax({
+				url: 'searchBook.php', 
+				data: {searchBook: "Price"},
+				success: function(data){
+					$('#booktable').html(data);	
+				}
+			});
+		});
+		
+	});
+	$(document).ready(function() {
+		$( "#quantity" ).click(function() {
+			$.ajax({
+				url: 'searchBook.php', 
+				data: {searchBook: "Quantity"},
+				success: function(data){
+					$('#booktable').html(data);	
+				}
+			});
+		});
+		
+	});
+	$(document).ready(function() {
+		$( "#publisher" ).click(function() {
+			$.ajax({
+				url: 'searchBook.php', 
+				data: {searchBook: "Publisher"},
+				success: function(data){
+					$('#booktable').html(data);	
+				}
+			});
+		});
+		
+	});
+	$(document).ready(function() {
+		$( "#publisherprice" ).click(function() {
+			$.ajax({
+				url: 'searchBook.php', 
+				data: {searchBook: "Publisher_Price"},
+				success: function(data){
+					$('#booktable').html(data);	
+				}
+			});
+		});
+		
+	});
+</script>
+
 <title>DELK's Books: The best online shop to find your books</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <!-- Custom Theme files -->
 <!--theme style-->
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />	
 <script src="js/jquery.min.js"></script>
-
 <!--//theme style-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -209,32 +284,37 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!---->	
 <div class="contact">
 	  <div class="container">
-		<?php 
-		echo '<h2 class> Hello <span>' . $_SESSION["position"] . " Employee " . $_SESSION["employeefirstName"] . '</span> </h2>  ' ;
-		?>
-		<p>Below, edit your personal information, look at your purchase history, or write a review for a book.</p>		
+	  	<h1><u>Book Information Page</u></h1>
+	  	<br></br>
+		<button id="title">Order by Title</button> <button id="author">Order by Author</button> <button id="genre">Order by Genre</button> <button id="date">Order by Date</button> <button id="price">Order by Book Price</button> <button id="quantity">Order by Quantity</button> <button id="publisher">Order by Publisher</button> <button id="publisherprice">Order by Publisher Price</button>
 		<br></br>
-		<p><font size = "5px"> <u>Personal Information:</u></font>
-			<br></br>
-			<div class = "boxed">
-			<b><font size="3px"> First Name: </b><?php echo "$fname" ; ?></font>
-			<span style="margin-left: 3em;"><b><font size="3px"> Last Name: </b><?php echo "$lname" ; ?></font></span>
-			<br></br>
-			<b><font size="3px"> Street Address: </b><?php echo "$address" ; ?></font> 
-			<br></br>
-			<b><font size="3px"> City: </b><?php echo "$city" ; ?></font>
-			<br></br>
-			<b><font size="3px"> State: </b><?php echo "$state" ; ?></font> 
-			<span style="margin-left: 3em;"><b><font size="3px"> Zip Code: </b><?php echo "$zipcode" ; ?></font></span>
-			<br></br>
-			<b><font size="3px"> Phone Number: </b><?php echo "$phonenumber" ; ?></font>
-			<br></br>
-			<b><font size="3px"> Position: </b><?php echo $_SESSION["position"] ; ?></font>
-			<br></br>
-			<b><font size="3px"> Salary: </b><?php echo "$" . $salary ; ?></font>
-			</div>
-		</p>
-</div>
+		<br></br>
+		<div id = "booktable">
+		<?php
+			$servername = "stardock.cs.virginia.edu";
+			$username = "cs4750s17elk2fw";
+			$serverpassword ="cs4750";
+			$dbname = "cs4750s17elk2fw";
+
+			$conn = new mysqli($servername, $username, $serverpassword, $dbname);
+			if($conn->connect_error){
+				die("Connection failed: ". $conn->connect_error);
+			}
+			 $stmt = $conn->stmt_init();
+			  $stmt->prepare("select * from BookInfo");
+			  $stmt->execute();
+	          $stmt->bind_result($isbn, $title, $author, $genre, $date, $binding, $price, $quantity, $publisher, $publisherprice);
+	          echo '<table class = "table1">';
+	          echo '<th>ISBN</th><th>Title</th><th>Author</th><th>Genre</th><th>Date</th><th>Binding</th><th>Price</th><th>Quantity</th><th>Publisher</th><th>Publisher Price</th>';
+	          while($stmt->fetch()) {
+	                    echo "<tr><td>$isbn</td><td>$title</td><td>$author</td><td>$genre</td><td>$date</td><td>$binding</td><td>$price</td><td>$quantity</td><td>$publisher</td><td>$publisherprice</td></tr>";
+	          }
+	         echo '</table>';
+    		$conn->close(); 
+	    ?>
+		</div>
+
+	</div>
 </div>
 <!---->
 

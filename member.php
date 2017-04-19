@@ -31,8 +31,7 @@ $zipcode = $row["zipcode"];
 $state = $row["state"];
 $phonenumber= $row["phonenumber"];
 
-
-mysqli_close($conn);
+$conn->close();
 ?>
 
 
@@ -275,7 +274,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			echo '<h1><a href="reviewBook.php"><span class="label label-info" style="margin-left: 910px;">Review Book(s)</span></a></h1>';
 			}
 
-    		mysqli_close($conn);
+    		$conn->close();
 	    ?>
 		</p>
 	</div>

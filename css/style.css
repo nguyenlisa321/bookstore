@@ -718,6 +718,7 @@ background-position:-167px -36px;
 }
 .product-grid {
 	width: 30%;
+	height: 400px;
 	margin: 0 3% 4% 0;
 	float: left;	
 	position: relative;

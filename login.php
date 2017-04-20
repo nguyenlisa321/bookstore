@@ -6,10 +6,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <?php
 session_start();
-if(isset($_SESSION['employeefirstName'])){
-	header('Location: employeedash.php');
-	exit();
-}
 $generalError = "";
 $loggedOut = "";
 

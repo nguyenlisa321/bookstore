@@ -14,33 +14,168 @@ $dbname = "cs4750s17elk2fw";
 
 $db = new mysqli($servername, $username, $serverpassword, $dbname);
 if($db->connect_error){
-        die("Connection failed: ". $conn->connect_error);
+        die("Connection failed: ". $db->connect_error);
 }
 
-$errormessage="";
-$successmessage="";
+$errormessage1="";
+$successmessage1="";
+
+$errormessage2="";
+$successmessage2="";
+
+
+$errormessage3="";
+$successmessage3="";
+
+$fnameError="";
+$lnameError="";
+$addressError="";
+$cityError= "";
+$zipcodeError="";
+$phonenumberError="";
+$emailError="";
+$passwordError="";
+$positionError="";
+$salaryError="";
+$fname="";
+$lname="";
+$address="";
+$city= "";
+$state= "";
+$zipcode="";
+$phonenumber="";
+$email="";
+$password="";
+$position="";
+$salary="";
 
 if(isset($_POST["edit"])){
-		 $email = $_POST["employeeEmail"];
-		 $sql = "Select * FROM Employee";
-		 $result = $db->query($sql) or die($db->error);
-     $row = $result->fetch_array();
+	 $email = $_POST["employeeEmail"];
+	 $sql = "Select * FROM Employee";
+	 $result = $db->query($sql) or die($db->error);
+ 	 $row = $result->fetch_array();
      $newsalary = intval($_POST['editsalary']);
      $sql = "Update Employee SET salary = '$newsalary' where Employee.email = '$email' ";
      if ($db->query($sql) === TRUE) {
-        $successmessage = "New Salary for " . $_POST["employeeEmail"] . " is '$newsalary'";
+        $successmessage2 = "New Salary for " . $_POST["employeeEmail"] . " is '$newsalary'";
      } else {
-        $errormessage = "Unsuccesful Increase";
+        $errormessage2 = "Unsuccesful Change Of Salary";
      }
+      $db->close();
+
 }else if(isset($_POST["delete"])){
-	   $email = $_POST["employeeEmail"];
+	
+	 $email = $_POST["employeeEmail"];
      $sql = "Delete FROM Employee Where email = '$email' " ;
      if ($db->query($sql) === TRUE) {
-        $successmessage = "Deleted '$email' ";
+        $successmessage1 = "Deleted '$email' ";
      } else {
-        $errormessage = "Unsuccesful Delete";
+        $errormessage1 = "Unsuccesful Delete";
      }
+      $db->close();
+	
+
+}else if(isset($_POST["add"])){
+		
+	$tempfname = $_POST["fname"];
+	if(preg_match("/^[a-zA-Z-]+$/", $tempfname)){
+		$fname = strtoupper($tempfname);
+	}else{
+		$fnameError = "Should only contain letters or dashes<br />";
+	}
+
+	//last name check
+	$templname = $_POST["lname"];
+	if(preg_match("/^[a-zA-Z-]+$/", $templname)){
+		$lname = strtoupper($templname);
+	}else{
+		$lnameError= "Should only contain letters or dashes<br />";
+	}
+
+	//street address check
+	$tempaddress = $_POST["address"];
+	if(preg_match("/^[a-zA-Z0-9. ]+$/", $tempaddress)){
+		$address = strtoupper($tempaddress);
+	}else{
+		$addressError = "Please enter a valid street address <br />";
+	}
+
+	//city check
+	$tempcity = $_POST["city"];
+	if(preg_match("/^[a-zA-Z-]+$/", $tempcity)){
+		$city = strtoupper($tempcity);
+	}else{
+		$cityError= "Should only contain letters <br />";
+	}
+
+	//state check
+	$state = $_POST["state"];
+
+	//zipcode check
+	$tempzipcode = $_POST["zipcode"];
+	if(ctype_digit($tempzipcode) && strlen($tempzipcode)==5){
+		$zipcode = intval($tempzipcode);
+	}else{
+		$zipcodeError = "Please enter a valid 5 digit zip code <br />";
+	}
+
+	//salary check
+	$tempsalary = $_POST["salary"];
+	if(ctype_digit($tempsalary)){
+		$salary = intval($tempsalary);
+	}else{
+		$salaryError = "Please enter a valid salary <br />";
+	}
+
+	//position check
+	$position = $_POST["position"];
+
+	//email check
+	$tempemail = strtolower($_POST["email"]);
+	if(preg_match("/@delk.com/", $tempemail)){
+		$email = $tempemail;
+	}else{
+		$emailError = "Email must have @delk.com";
+	}
+
+	//no check needed for password
+	$password = $_POST['password'];
+	$passwordHashed = hash("md5", $password);
+
+	//phonenumber check
+	$tempphonenumber = $_POST["phonenumber"];
+	if(preg_match("/^[0-9-]+$/", $tempphonenumber)){
+		if(!(strpos($tempphonenumber, "-")===false)){
+			$tempphonenumber = str_replace("-", "", $tempphonenumber);
+			if(strlen($tempphonenumber)==10){
+				$phonenumber = $tempphonenumber;
+			}else{
+				$phonenumberError = "Should only include 10 digit phone number with or without dashes <br />";
+			}
+		}else{
+			if(strlen($tempphonenumber)==10){
+				$phonenumber = $tempphonenumber;
+			}else{
+				$phonenumberError = "Should only include 10 digit phone number with or without dashes <br />";
+			}
+		}
+	}else{
+		$phonenumberError = "Should only include 10 digit phone number with or without dashes <br />";
+	}
+
+	if(strlen($fnameError)==0 && strlen($lnameError)==0 && strlen($addressError)==0  && strlen($cityError)==0 && strlen($zipcodeError)==0 && strlen($phonenumberError)==0 && strlen($emailError)==0){
+		$smt = $db->prepare("INSERT INTO Employee (fname, lname, address, city, state, zipcode, phonenumber, email, password, position, salary) VALUES (?,?,?,?,?,?,?,?,?,?,?)" );
+	    $smt->bind_param("sssssiisssd", $fname, $lname, $address, $city, $state, $zipcode, $phonenumber, $email, $passwordHashed, $position, $salary);
+		if ($smt->execute()) { 
+			$successmessage3 = "Inserted '$email' ";
+		} else {
+			$errormessage3 = "Email already in use";
+		}
+	    $smt->close();
+	    $db->close();
+	}
 }else{
+
 }
 
 ?>
@@ -232,14 +367,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					if($conn->connect_error){
 						die("Connection failed: ". $conn->connect_error);
 					}
-					 $stmt = $conn->stmt_init();
-					  $stmt->prepare("select * from Employee");
+					  $stmt = $conn->stmt_init();
+					  $stmt->prepare("select fname, lname, address, city, state, zipcode, phonenumber, email, position, salary from Employee");
 					  $stmt->execute();
-			          $stmt->bind_result($fname, $lname, $address, $city, $state, $zipcode, $phonenumber, $email, $password, $position, $salary);
+			          $stmt->bind_result($fname, $lname, $address, $city, $state, $zipcode, $phonenumber, $email, $position, $salary);
 			          echo '<table class = "table1">';
-			          echo '<th>First Name</th><th>Last Name</th><th>Address</th><th>City</th><th>State</th><th>Zip Code</th><th>Phone Number</th><th>Email</th><th>Password</th><th>Position</th><th>Salary</th>';
+			          echo '<th>First Name</th><th>Last Name</th><th>Address</th><th>City</th><th>State</th><th>Zip Code</th><th>Phone Number</th><th>Email</th><th>Position</th><th>Salary</th>';
 			          while($stmt->fetch()) {
-			                    echo "<tr><td>$fname</td><td>$lname</td><td>$address</td><td>$city</td><td>$state</td><td>$zipcode</td><td>$phonenumber</td><td>$email</td><td>$password</td><td>$position</td><td>$salary</td></tr>";
+			                    echo "<tr><td>$fname</td><td>$lname</td><td>$address</td><td>$city</td><td>$state</td><td>$zipcode</td><td>$phonenumber</td><td>$email</td><td>$position</td><td>$salary</td></tr>";
 			          }
 			         echo '</table>';
 		    		$conn->close();
@@ -251,9 +386,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div id = "newdelete">
 		  		<h4>Delete an Employee</h4>
 				  	<?php
-				  	echo '<b> ' . $errormessage .'</b>';
-			        echo '<b> ' . $successmessage . '</b>';
-			        if(isset($errormessage) || isset($successmessage)){
+				  	echo '<b> ' . $errormessage1 .'</b>';
+			        echo '<b> ' . $successmessage1 . '</b>';
+			        if(isset($errormessage1) || isset($successmessage1)){
 			          echo '<br></br>';
 			        }?>
 				  		Email:
@@ -274,7 +409,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									$result = $conn->query($sql);
 
 									while($row = $result->fetch_assoc()){
-										echo '<option value = "' . $row['email']  . '"/>' . $row['fname'] . '</option>';
+										echo '<option value = "' . $row['email']  . '"/>' . $row['email'] . '</option>';
 									}
 									$conn->close();
 					        		?>
@@ -288,9 +423,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 					<h4>Edit Employee Salary</h4>
 						<?php
-						echo '<b> ' . $errormessage .'</b>';
-							echo '<b> ' . $successmessage . '</b>';
-							if(isset($errormessage) || isset($successmessage)){
+						echo '<b> ' . $errormessage2 .'</b>';
+							echo '<b> ' . $successmessage2 . '</b>';
+							if(isset($errormessage2) || isset($successmessage2)){
 								echo '<br></br>';
 							}?>
 							Email:
@@ -326,27 +461,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<hr COLOR="black" NOSHADE></hr>
 							<br><br>
 									<?php
-									echo '<b> ' . $errormessage .'</b>';
-										echo '<b> ' . $successmessage . '</b>';
-										if(isset($errormessage) || isset($successmessage)){
+									echo '<b> ' . $errormessage3 .'</b>';
+										echo '<b> ' . $successmessage3 . '</b>';
+										if(isset($errormessage3) || isset($successmessage3)){
 											echo '<br></br>';
-										}?>
-										<form action="addemployee.php" method="post">
+									}?>
+										<form action="employee.php" method="post">
 						            <fieldset>
 						                <legend>Add New Employee</legend>
-						                First Name:
+						                First Name: <?php echo '<span style="color: red;">'.$fnameError.'</span>'; ?>
 						                <div>
 						                <input type="text" name="fname" value="" required/>
 						                </div>
-						                Last Name:
+						                Last Name: <?php echo '<span style="color: red;">'.$lnameError.'</span>'; ?>
 						                <div>
 						                    <input type="text" name="lname" value="" required/>
 						                </div>
-						                Address:
+						                Address: <?php echo '<span style="color: red;">'.$addressError.'</span>'; ?>
 						                <div>
 						                <input type="text" name="address" value="" required/>
 						                </div>
-						                City:
+						                City:  <?php echo '<span style="color: red;">'.$cityError.'</span>'; ?>
 						                <div>
 						                    <input type="text" name="city" value="" required/>
 						                </div>
@@ -409,25 +544,25 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												</select>
 										</div>
 										</br>
-						                Zip Code:
+						                Zip Code: <?php echo '<span style="color: red;">'.$zipcodeError.'</span>'; ?>
 						                <div>
 						                    <input type="text" name="zipcode" value="" required/>
 						                </div>
-														Phone number:
+														Phone number: <?php echo '<span style="color: red;">'.$phonenumberError.'</span>'; ?> 
 							                <div>
 							                    <input type="text" name="phonenumber" value="" required/>
 							                </div>
-														Email:
+														Email: <?php echo '<span style="color: red;">'.$emailError.'</span>'; ?>
 								               <div>
-								                  <input type="text" name="email" value="" required/>
+								                  <input type="email" name="email" value="" required/>
 								               </div>
 														Password:
 		 						                <div>
-		 						                    <input type="text" name="password" value="" required/>
+		 						                    <input type="password" name="password" value="" required/>
 		 						                </div>
 																Salary:
 					 						             <div>
-					 						                <input type="text" name="salary" value="" required/>
+					 						                <input type="number" min="0" name="salary" value="" required/>
 					 						             </div>
 														Position:
 															<br>

@@ -31,6 +31,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
 
 </head>
+
 <body> 
 <!--header-->
 <div class="header-top">
@@ -91,11 +92,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<div class="col1 me-one">
 									
 									<ul>
-										<li><a href="product.html">Fiction</a></li>
-										<li><a href="product.html">Non-Fiction</a></li>
-										<li><a href="product.html">Children</a></li>
-										<li><a href="product.html">Lifestyle</a></li>
-										<li><a href="product.html">Textbook</a></li>
+										<li><a href="product.php?genre=Fiction">Fiction</a></li>
+										<li><a href="product.php?genre=Non-Fiction">Non-Fiction</a></li>
+										<li><a href="product.php?genre=Children">Children</a></li>
+										<li><a href="product.php?genre=Lifestyle">Lifestyle</a></li>
+										<li><a href="product.php?genre=Textbook">Textbook</a></li>
 										
 									</ul>
 								</div>

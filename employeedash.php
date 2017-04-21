@@ -105,11 +105,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<div class="col1 me-one">
 									
 									<ul>
-										<li><a href="product.html">Fiction</a></li>
-										<li><a href="product.html">Non-Fiction</a></li>
-										<li><a href="product.html">Children</a></li>
-										<li><a href="product.html">Lifestyle</a></li>
-										<li><a href="product.html">Textbook</a></li>
+										<li><a href="fiction.php">Fiction</a></li>
+										<li><a href="nonfiction.php">Non-Fiction</a></li>
+										<li><a href="children.php">Children</a></li>
+										<li><a href="lifestyle.php">Lifestyle</a></li>
+										<li><a href="textbook.php">Textbook</a></li>
 										
 									</ul>
 								</div>

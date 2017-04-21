@@ -4,6 +4,9 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +41,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			});
 		</script>
 <!-- //the jScrollPane script -->
-
+  <script>
+	function GetURLParameter(sParam)
+	{
+	    var sPageURL = window.location.search.substring(1);
+	    var sURLVariables = sPageURL.split('&');
+	    for (var i = 0; i < sURLVariables.length; i++)
+	    {
+	        var sParameterName = sURLVariables[i].split('=');
+	        if (sParameterName[0] == sParam)
+	        {
+	            return sParameterName[1];
+	        }
+	    }
+	} 
+</script>
 </head>
 <body> 
 
@@ -101,11 +118,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<div class="col1 me-one">
 									
 									<ul>
-										<li><a href="product.html">Fiction</a></li>
-										<li><a href="product.html">Non-Fiction</a></li>
-										<li><a href="product.html">Children</a></li>
-										<li><a href="product.html">Lifestyle</a></li>
-										<li><a href="product.html">Textbook</a></li>
+										<li><a href="product.php?genre=Fiction">Fiction</a></li>
+										<li><a href="product.php?genre=Non-Fiction">Non-Fiction</a></li>
+										<li><a href="product.php?genre=Children">Children</a></li>
+										<li><a href="product.php?genre=Lifestyle">Lifestyle</a></li>
+										<li><a href="product.php?genre=Textbook">Textbook</a></li>
 										
 									</ul>
 								</div>
@@ -197,10 +214,23 @@ $.post("book.php",
             
             var arr = JSON.parse(data);
             //alert(JSON.stringify(arr));
+            var param = GetURLParameter('genre');
+            //alert(param);
+            if(param == null) {
             for(var i =0; i < arr.length; i++){
-            var cartitem = "<a href='single.php'><div class='product-grid'><div class='more-product'><span> </span></div>						<div class='product-img b-link-stripe b-animate-go  thickbox'><img src='" + arr[i].PicturePath +"'' class='img-responsive' alt=''><div class='b-wrapper'><h4 class='b-animate b-from-left  b-delay03'>							<button><span class='glyphicon glyphicon-zoom-in' aria-hidden='true'></span>Quick View</button></h4></div></div></a><div class='product-info simpleCart_shelfItem'><div class='product-info-cust prt_name'><h4>"+arr[i].Title+"</h4> <span class='item_price'>$"+arr[i].Price+"</span><div class='ofr'><h4>" + arr[i].Author + "</div><div class='clearfix'> </div></div></div></div>";
+            var cartitem = "<a href='single.php'><div class='product-grid'><div class='more-product'><span> </span></div>						<div class='product-img b-link-stripe b-animate-go  thickbox'><img src='" + arr[i].PicturePath +"'' class='img-responsive' alt=''><div class='b-wrapper'><h4 class='b-animate b-from-left  b-delay03'>							<button><span class='glyphicon glyphicon-zoom-in' aria-hidden='true'></span>More Info</button></h4></div></div></a><div class='product-info simpleCart_shelfItem'><div class='product-info-cust prt_name'><h4>"+arr[i].Title+"</h4> <span class='item_price'>$"+arr[i].Price+"</span><div class='ofr'><h4>" + arr[i].Author + "</div><div class='clearfix'> </div></div></div></div>";
+            $("#books").append(cartitem);
+        //}
+        }
+    }
+    		else {
+    			for(var i =0; i < arr.length; i++){
+    				if(arr[i].Genre == param ){
+            var cartitem = "<a href='single.php'><div class='product-grid'><div class='more-product'><span> </span></div>						<div class='product-img b-link-stripe b-animate-go  thickbox'><img src='" + arr[i].PicturePath +"'' class='img-responsive' alt=''><div class='b-wrapper'><h4 class='b-animate b-from-left  b-delay03'>							<button><span class='glyphicon glyphicon-zoom-in' aria-hidden='true'></span>More Info</button></h4></div></div></a><div class='product-info simpleCart_shelfItem'><div class='product-info-cust prt_name'><h4>"+arr[i].Title+"</h4> <span class='item_price'>$"+arr[i].Price+"</span><div class='ofr'><h4>" + arr[i].Author + "</div><div class='clearfix'> </div></div></div></div>";
             $("#books").append(cartitem);
         }
+    		}
+    	}
        });
 
 </script>

@@ -9,7 +9,7 @@ $db = new mysqli($servername, $username, $serverpassword, $dbname);
         die ("Could not connect to db: " . $db->connect_error);
         endif;
      
-$query = "SELECT Title, Author, Price, PicturePath FROM Books"; #Define query
+$query = "SELECT Title, Author, Price, PicturePath, Genre FROM Books"; #Define query
 $result= $db->query($query) or die ("Invalid select " . $db->error);
            #Eval and store result
 while ($row = $result->fetch_assoc()) {

@@ -29,14 +29,21 @@ if(isset($_POST["delete"])){
         $errormessage = "Unsuccesful Delete";
      }
 }else if(isset($_POST["add"])){
-     $sql = "Select Quantity FROM Books where ISBN = " . $_POST['bookISBN'];
+     $sql = "Select * FROM Books where ISBN = " . $_POST['bookISBN'];
      $result = $db->query($sql);
      $row = $result->fetch_assoc();
      $currentquantity = $row["Quantity"];
+		 $publisher = $row["Publisher"];
      $newquantity = intval($currentquantity) + intval($_POST['addquantity']);
      $sql = "Update Books SET Quantity = " . $newquantity . " Where ISBN = " . $_POST['bookISBN'] . "";
-     if ($db->query($sql) === TRUE) {
+		 $sql2 = "UPDATE Publishers INNER JOIN Books ON Publishers.Publisher = Books.Publisher SET Orders = Orders + 1 WHERE Books.Publisher = '$publisher'";
+		 if ($db->query($sql) === TRUE) {
         $successmessage = "Increased " . $_POST["bookISBN"] . " by " . $_POST["addquantity"];
+     } else {
+        $errormessage = "Unsuccesful Increase";
+     }
+		 if ($db->query($sql2) === TRUE) {
+        $successmessage = "Increased '$publisher' order by 1";
      } else {
         $errormessage = "Unsuccesful Increase";
      }
@@ -360,8 +367,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	  	Title:
 	  	<form action=book.php method = post>
 	  	<select name = "bookISBN">
-                <?php
-                $servername = "stardock.cs.virginia.edu";
+        <?php
+        $servername = "stardock.cs.virginia.edu";
 				$username = "cs4750s17elk2fw";
 				$serverpassword ="cs4750";
 				$dbname = "cs4750s17elk2fw";

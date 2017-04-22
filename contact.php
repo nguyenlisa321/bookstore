@@ -185,100 +185,63 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			 </div>
 			<div class="clearfix"> </div>
 </div>
-<!-- check out -->
-<div class="container">
-	<div class="check-sec">	 
-		<div class="col-md-3 cart-total">
-			<a class="continue" href="product.html">Continue to basket</a>
-			<div class="price-details">
-				<h3>Price Details</h3>
-				<span>Total</span>
-				<span class="total1">6200.00</span>
-				<span>Discount</span>
-				<span class="total1">10%(Festival Offer)</span>
-				<span>Delivery Charges</span>
-				<span class="total1">150.00</span>
-				<div class="clearfix"></div>				 
-			</div>	
-			<ul class="total_price">
-			   <li class="last_price"> <h4>TOTAL</h4></li>	
-			   <li class="last_price"><span>6150.00</span></li>			   
-			</ul> 
-			<div class="clearfix"></div>
-			<div class="clearfix"></div>
-			<a class="order" href="#">Place Order</a>
-			<div class="total-item">
-				<h3>OPTIONS</h3>
-				<h4>COUPONS</h4>
-				<a class="cpns" href="#">Apply Coupons</a>
-			</div>
-		</div>
-		<div class="col-md-9 cart-items">
-			<h1>My Shopping Bag (2)</h1>
-				<script>$(document).ready(function(c) {
-					$('.close1').on('click', function(c){
-						$('.cart-header').fadeOut('slow', function(c){
-							$('.cart-header').remove();
-						});
-						});	  
-					});
-			   </script>
-			<div class="cart-header">
-				<div class="close1"> </div>
-				<div class="cart-sec simpleCart_shelfItem">
-						<div class="cart-item cyc">
-							<img src="images/p4.jpg" class="img-responsive" alt=""/>
-						</div>
-					   <div class="cart-item-info">
-						    <h3><a href="single.html">Rock Light Emergency Lights</a><span>Model No: RL-5511S</span></h3>
-							<ul class="qty">
-								<li><p>Size : 5</p></li>
-								<li><p>Qty : 1</p></li>
-							</ul>
-							<div class="delivery">
-								 <p>Service Charges : Rs.100.00</p>
-								 <span>Delivered in 2-3 bussiness days</span>
-								 <div class="clearfix"></div>
-							</div>								
-					   </div>
-					   <div class="clearfix"></div>
-											
-				  </div>
-			 </div>
-			 <script>$(document).ready(function(c) {
-					$('.close2').on('click', function(c){
-							$('.cart-header2').fadeOut('slow', function(c){
-						$('.cart-header2').remove();
-					});
-					});	  
-					});
-			 </script>
-			<div class="cart-header2">
-				<div class="close2"> </div>
-					<div class="cart-sec simpleCart_shelfItem">
-						<div class="cart-item cyc">
-							 <img src="images/p3.jpg" class="img-responsive" alt=""/>
-						</div>
-					    <div class="cart-item-info">
-							 <h3><a href="single.html">Show Lights</a><span>Model No: SL-3578</span></h3>
-							<ul class="qty">
-								<li><p>Size : 5</p></li>
-								<li><p>Qty : 1</p></li>
-							</ul>
-							<div class="delivery">
-								<p>Service Charges : Rs.100.00</p>
-								<span>Delivered in 2-3 bussiness days</span>
-								<div class="clearfix"></div>
-							</div>							
-					   </div>
-					   <div class="clearfix"></div>					
+<!---->
+<div class="contact">
+	  <div class="container">
+		 <ol class="breadcrumb">
+		  <li><a href="index.html">Home</a></li>
+		  <li class="active">Contact</li>
+		 </ol>
+			<!--start contact-->
+			<h3>Contact Us</h3>
+		  <div class="section group">				
+				<div class="col-md-6 span_1_of_3">
+					<div class="contact_info">
+			    	 	<h4>Find Us Here</h4>
+			    	 		<div class="map">
+					   			<iframe src="https://maps.google.co.in/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Lighthouse+Point,+FL,+United+States&amp;aq=4&amp;oq=light&amp;sll=26.275636,-80.087265&amp;sspn=0.04941,0.104628&amp;ie=UTF8&amp;hq=&amp;hnear=Lighthouse+Point,+Broward,+Florida,+United+States&amp;t=m&amp;z=14&amp;ll=26.275636,-80.087265&amp;output=embed"></iframe>
+					   		</div>
+      				</div>
+      			<div class="company_address">
+				     	<h4>Company Information :</h4>
+						    	<p>500 Lorem Ipsum Dolor Sit,</p>
+						   		<p>22-56-2-9 Sit Amet, Lorem,</p>
+						   		<p>USA</p>
+				   		<p>Phone:(00) 222 666 444</p>
+				   		<p>Fax: (000) 000 00 00 0</p>
+				 	 	<p>Email: <a href="mailto:info@example.com">info@mycompany.com</a></p>
+				   		<p>Follow on: <a href="#">Facebook</a>, <a href="#">Twitter</a></p>
+				   </div>
+				</div>				
+				<div class="col-md-6 span_2_of_3">
+				  <div class="contact-form">
+					    <form>
+					    	<div>
+						    	<span><label>NAME</label></span>
+						    	<span><input name="userName" type="text" class="textbox"></span>
+						    </div>
+						    <div>
+						    	<span><label>E-MAIL</label></span>
+						    	<span><input name="userEmail" type="text" class="textbox"></span>
+						    </div>
+						    <div>
+						     	<span><label>MOBILE</label></span>
+						    	<span><input name="userPhone" type="text" class="textbox"></span>
+						    </div>
+						    <div>
+						    	<span><label>SUBJECT</label></span>
+						    	<span><textarea name="userMsg"> </textarea></span>
+						    </div>
+						   <div>
+						   		<span><input type="submit" class="mybutton" value="Submit"></span>
+						  </div>
+					    </form>
+
 				    </div>
-			</div>		
-		</div>
-		<div class="clearfix"> </div>
-	</div>
-</div>
-<!-- //check out -->
+  				</div>				
+		  </div>
+	  </div>
+ </div>
 <!---->
 <div class="subscribe">
 	 <div class="container">
@@ -331,7 +294,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		 </div>
 	 </div>
 </div>
-<!---->
 <div class="copywrite">
 	 <div class="container">
 		 <div class="copy">

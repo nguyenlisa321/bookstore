@@ -6,8 +6,30 @@ if(!isset($_SESSION['employeefirstName'])){
 	header('Location: login.php');
 	exit();
 }
-
+$servername = "stardock.cs.virginia.edu";
+$username = "cs4750s17elk2fw";
+$serverpassword ="cs4750";
+$dbname = "cs4750s17elk2fw";
+$conn = new mysqli($servername, $username, $serverpassword, $dbname);
+if($conn->connect_error){
+	die("Connection failed: ". $conn->connect_error);
+}
+$email = $_SESSION['employeeEmail'];
+$sql = "Select fname, lname, address, city, state, zipcode, phonenumber, position, salary from Employee where email = '$email'" ;
+$result = $conn->query($sql);
+$row = mysqli_fetch_assoc($result);
+$fname = $row["fname"];
+$lname = $row["lname"];
+$address = $row["address"];
+$city = $row["city"];
+$zipcode = $row["zipcode"];
+$state = $row["state"];
+$phonenumber= $row["phonenumber"];
+$_SESSION["position"] = $row["position"];
+$salary = $row ["salary"];
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,7 +76,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 			 <!---->		 
 			 <div class="top-nav">
-					<ul class="memenu skyblue" style="width: 140%"">
+				<ul class="memenu skyblue" style="width: 140%"">
 					<li class="grid"><a href="customer.php">Customers</a>
 						<!--div class="mepanel">
 							<div class="row">
@@ -99,17 +121,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</div>
 						</div>
 					</li-->
-					<li class="grid"><a href="#">Genres</a>
-						<div class="mepanel" style="width: 115px; margin-left: 160px;">
+					<li class="grid"><a href="book.php">Books</a>
+						<!--<div class="mepanel" style="width: 115px; margin-left: 160px;">
+							<!--
 							<div class="row">
 								<div class="col1 me-one">
-									
+								<!--	
 									<ul>
-										<li><a href="fiction.php">Fiction</a></li>
-										<li><a href="nonfiction.php">Non-Fiction</a></li>
-										<li><a href="children.php">Children</a></li>
-										<li><a href="lifestyle.php">Lifestyle</a></li>
-										<li><a href="textbook.php">Textbook</a></li>
+										<li><a href="product.html">Fiction</a></li>
+										<li><a href="product.html">Non-Fiction</a></li>
+										<li><a href="product.html">Children</a></li>
+										<li><a href="product.html">Lifestyle</a></li>
+										<li><a href="product.html">Textbook</a></li>
 										
 									</ul>
 								</div>
@@ -137,11 +160,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<li><a href="product.html">Anchor</a></li>										
 									</ul>	
 								</div-->
-							</div>
+					<!--		</div>
 						</div>
-					</li>
-					<!--li class="grid"><a href="typo.html">Typo</a></li-->
-					<li class="grid"><a href="about.php">About</a>
+					</li> -->
+					<li class="grid"><a href="employee.php">Employees</a></li>
+					<li class="grid"><a href="publisher.php">Publishers</a>
 					<!--
 					<div class="mepanel" style="width: 115px; margin-left: 265px;">
 							<div class="row">
@@ -154,17 +177,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</div>
 								</div>-->
 					</li>	
-					<?php 
-					if(isset($_SESSION["firstName"])){
-						echo '<li class="grid"><a href="member.php">Account</a> </li>';
-						echo '<div style="margin-top: 3%; margin-left: 80%;"> Welcome Customer ' . $_SESSION["firstName"] . ' ' . $_SESSION["lastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ;
-					}else if(isset($_SESSION["employeefirstName"])){
-						echo '<li class="grid"><a style="width: 130px; height: 97px;" href="employeedash.php">Employee Dashboard </a> </li>';
-						echo '<div style="margin-top: 3%; margin-left: 80%;"> Welcome Employee ' . $_SESSION["employeefirstName"] . ' ' . $_SESSION["employeelastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ; 
-					}else{
-						echo '<div style="margin-top: 5.5%; margin-left: 50%;"> <a href="account.php">Sign Up</a>	or  <a href="login.php">Log In</a></div>';
-					}
-					?>
+				 	<li class="grid"><a style="width: 130px; height: 97px;" href="employeedash.php">Employee Dashboard </a> </li>
+				    <?php echo'<div style="margin-top: 4%; margin-left: 50%"> Welcome Employee ' . $_SESSION["employeefirstName"] . ' ' . $_SESSION["employeelastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ; ?>
 					<!--<li class="grid"><a href="account.php">Sign Up</a>
 					</li>
 					<li class="grid"><a href="login.html">Log In</a>
@@ -172,7 +186,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</ul>				
 			 </div>
 			 <!---->
-
+			 <!--
 			 <div class="cart box_1">
 				 <a href="checkout.html">
 					<div class="total">
@@ -184,13 +198,41 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			 </div>
 			 <div class="clearfix"> </div>
 			 <!---->			 
-			 </div>
-			<div class="clearfix"> </div>
+			<!-- </div> -->
+			<div class="clearfix"> </div> 
 </div>
 <!---->	
-
+<div class="contact">
+	  <div class="container">
+		<?php 
+		echo '<h2 class> Hello <span>' . $_SESSION["position"] . " Employee " . $_SESSION["employeefirstName"] . '</span> </h2>  ' ;
+		?>
+		<p>Below, edit your personal information, look at your purchase history, or write a review for a book.</p>		
+		<br></br>
+		<p><font size = "5px"> <u>Personal Information:</u></font>
+			<br></br>
+			<div class = "boxed">
+			<b><font size="3px"> First Name: </b><?php echo "$fname" ; ?></font>
+			<span style="margin-left: 3em;"><b><font size="3px"> Last Name: </b><?php echo "$lname" ; ?></font></span>
+			<br></br>
+			<b><font size="3px"> Street Address: </b><?php echo "$address" ; ?></font> 
+			<br></br>
+			<b><font size="3px"> City: </b><?php echo "$city" ; ?></font>
+			<br></br>
+			<b><font size="3px"> State: </b><?php echo "$state" ; ?></font> 
+			<span style="margin-left: 3em;"><b><font size="3px"> Zip Code: </b><?php echo "$zipcode" ; ?></font></span>
+			<br></br>
+			<b><font size="3px"> Phone Number: </b><?php echo "$phonenumber" ; ?></font>
+			<br></br>
+			<b><font size="3px"> Position: </b><?php echo $_SESSION["position"] ; ?></font>
+			<span style="margin-left: 3em;"><b><font size="3px"> Salary: </b><?php echo "$" . $salary ; ?></font></span>
+			<br></br>
+			<h1><a href="modifyPersonal.php"><span class="label label-info">Modify Personal Information</span></a></h1>
+			</div>
+		</p>
+</div>
+</div>
 <!---->
-
 <!---->
 <!--<div class="subscribe">
 	 <div class="container">

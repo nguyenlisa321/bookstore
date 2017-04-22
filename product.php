@@ -218,6 +218,7 @@ $.post("book.php",
             //alert(param);
             if(param == null) {
             for(var i =0; i < arr.length; i++){
+           
             var cartitem = "<a href='single.php'><div class='product-grid'><div class='more-product'><span> </span></div>						<div class='product-img b-link-stripe b-animate-go  thickbox'><img src='" + arr[i].PicturePath +"'' class='img-responsive' alt=''><div class='b-wrapper'><h4 class='b-animate b-from-left  b-delay03'>							<button><span class='glyphicon glyphicon-zoom-in' aria-hidden='true'></span>More Info</button></h4></div></div></a><div class='product-info simpleCart_shelfItem'><div class='product-info-cust prt_name'><h4>"+arr[i].Title+"</h4> <span class='item_price'>$"+arr[i].Price+"</span><div class='ofr'><h4>" + arr[i].Author + "</div><div class='clearfix'> </div></div></div></div>";
             $("#books").append(cartitem);
         //}

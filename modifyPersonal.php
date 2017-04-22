@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-if(!isset($_SESSION['firstName'])){
+if(!isset($_SESSION['firstName']) && !isset($_SESSION['employeefirstName'])){
 	session_unset();
 	session_destroy();
 	header('Location: login.php');
@@ -26,21 +26,38 @@ $conn = new mysqli($servername, $username, $serverpassword, $dbname);
 if($conn->connect_error){
 	die("Connection failed: ". $conn->connect_error);
 }
-$email = $_SESSION['email'];
-$sql = "Select fname, lname, address, city, state, zipcode, phonenumber from Customer where email = '$email'" ;
-$result = $conn->query($sql);
 
-$row = mysqli_fetch_assoc($result);
+if(isset($_SESSION["email"])){
+	$email = $_SESSION['email'];
+	$sql = "Select fname, lname, address, city, state, zipcode, phonenumber from Customer where email = '$email'" ;
+	$result = $conn->query($sql);
 
-$fname = $row["fname"];
-$lname = $row["lname"];
-$address = $row["address"];
-$city = $row["city"];
-$zipcode = $row["zipcode"];
-$state = $row["state"];
-$phonenumber= $row["phonenumber"];
+	$row = mysqli_fetch_assoc($result);
 
-$conn->close();
+	$fname = $row["fname"];
+	$lname = $row["lname"];
+	$address = $row["address"];
+	$city = $row["city"];
+	$zipcode = $row["zipcode"];
+	$state = $row["state"];
+	$phonenumber= $row["phonenumber"];
+	$conn->close();
+}else{
+	$email = $_SESSION['employeeEmail'];
+	$sql = "Select fname, lname, address, city, state, zipcode, phonenumber from Employee where email = '$email'" ;
+	$result = $conn->query($sql);
+
+	$row = mysqli_fetch_assoc($result);
+
+	$fname = $row["fname"];
+	$lname = $row["lname"];
+	$address = $row["address"];
+	$city = $row["city"];
+	$zipcode = $row["zipcode"];
+	$state = $row["state"];
+	$phonenumber= $row["phonenumber"];
+	$conn->close();
+}
 
 }else{
 
@@ -128,16 +145,27 @@ if(strlen($fnameError)==0 && strlen($lnameError)==0 && strlen($addressError)==0 
 	if($conn->connect_error){
 		die("Connection failed: ". $conn->connect_error);
 	}
-
-	$smt = $conn->prepare("Update Customer SET fname=?, lname=?, address=?, city=?, state=?, zipcode=?, phonenumber=? WHERE email=?" );
-    $smt->bind_param("sssssiis", $fname, $lname, $address, $city, $state, $zipcode, $phonenumber, $_SESSION["email"]);
-    $smt->execute();
-    $smt->close();
-    $conn->close();
-    $_SESSION["firstName"] = $fname;
-    $_SESSION["lastName"] = $lname;
-    header( 'Location: member.php' ) ;
-    exit();
+	if($_SESSION["firstName"]){
+		$smt = $conn->prepare("Update Customer SET fname=?, lname=?, address=?, city=?, state=?, zipcode=?, phonenumber=? WHERE email=?" );
+	    $smt->bind_param("sssssiis", $fname, $lname, $address, $city, $state, $zipcode, $phonenumber, $_SESSION["email"]);
+	    $smt->execute();
+	    $smt->close();
+	    $conn->close();
+	    $_SESSION["firstName"] = $fname;
+	    $_SESSION["lastName"] = $lname;
+	    header( 'Location: member.php' ) ;
+	    exit();
+	}else{
+		$smt = $conn->prepare("Update Employee SET fname=?, lname=?, address=?, city=?, state=?, zipcode=?, phonenumber=? WHERE email=?" );
+	    $smt->bind_param("sssssiis", $fname, $lname, $address, $city, $state, $zipcode, $phonenumber, $_SESSION["employeeEmail"]);
+	    $smt->execute();
+	    $smt->close();
+	    $conn->close();
+	    $_SESSION["employeefirstName"] = $fname;
+	    $_SESSION["employeelastName"] = $lname;
+	    header( 'Location: employeedash.php' ) ;
+	    exit();
+	}
 }
 }
 

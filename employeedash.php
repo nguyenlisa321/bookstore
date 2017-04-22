@@ -230,8 +230,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<b><font size="3px"> Phone Number: </b><?php echo "$phonenumber" ; ?></font>
 			<br></br>
 			<b><font size="3px"> Position: </b><?php echo $_SESSION["position"] ; ?></font>
+			<span style="margin-left: 3em;"><b><font size="3px"> Salary: </b><?php echo "$" . $salary ; ?></font></span>
 			<br></br>
-			<b><font size="3px"> Salary: </b><?php echo "$" . $salary ; ?></font>
+			<h1><a href="modifyPersonal.php"><span class="label label-info">Modify Personal Information</span></a></h1>
 			</div>
 		</p>
 </div>

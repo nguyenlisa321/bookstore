@@ -6,6 +6,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <?php 
 session_start();
+if(isset($_SESSION['employeefirstName'])){
+	header('Location: employeedash.php');
+	exit();
+}
 
 $fname="";
 $lname="";
@@ -121,6 +125,7 @@ if(strlen($fnameError)==0 && strlen($lnameError)==0 && strlen($addressError)==0 
     if(!$smt->execute()){
     	$generalError = "The current email is already used with an account. Please enter another email.";
     	$smt->close();
+    	$conn->close();
     }else{
     	$smt->close();
     	$conn->close();

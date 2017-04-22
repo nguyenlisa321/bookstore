@@ -6,10 +6,12 @@ if(!isset($_SESSION['employeefirstName'])){
 	header('Location: login.php');
 	exit();
 }
+
 $servername = "stardock.cs.virginia.edu";
 $username = "cs4750s17elk2fw";
 $serverpassword ="cs4750";
 $dbname = "cs4750s17elk2fw";
+
 $conn = new mysqli($servername, $username, $serverpassword, $dbname);
 if($conn->connect_error){
 	die("Connection failed: ". $conn->connect_error);
@@ -17,7 +19,9 @@ if($conn->connect_error){
 $email = $_SESSION['employeeEmail'];
 $sql = "Select fname, lname, address, city, state, zipcode, phonenumber, position, salary from Employee where email = '$email'" ;
 $result = $conn->query($sql);
+
 $row = mysqli_fetch_assoc($result);
+
 $fname = $row["fname"];
 $lname = $row["lname"];
 $address = $row["address"];
@@ -27,6 +31,7 @@ $state = $row["state"];
 $phonenumber= $row["phonenumber"];
 $_SESSION["position"] = $row["position"];
 $salary = $row ["salary"];
+
 $conn->close();
 ?>
 

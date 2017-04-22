@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-if(!isset($_SESSION['firstName'])){
+if(!isset($_SESSION['employeefirstName'])){
 	session_unset();
 	session_destroy();
 	header('Location: login.php');
@@ -13,38 +13,176 @@ $username = "cs4750s17elk2fw";
 $serverpassword ="cs4750";
 $dbname = "cs4750s17elk2fw";
 
-$conn = new mysqli($servername, $username, $serverpassword, $dbname);
-if($conn->connect_error){
-	die("Connection failed: ". $conn->connect_error);
+$db = new mysqli($servername, $username, $serverpassword, $dbname);
+if($db->connect_error){
+        die("Connection failed: ". $conn->connect_error);
 }
-$email = $_SESSION['email'];
-$sql = "Select fname, lname, address, city, state, zipcode, phonenumber from Customer where email = '$email'" ;
-$result = $conn->query($sql);
 
-$row = mysqli_fetch_assoc($result);
+$errormessage="";
+$successmessage="";
 
-$fname = $row["fname"];
-$lname = $row["lname"];
-$address = $row["address"];
-$city = $row["city"];
-$zipcode = $row["zipcode"];
-$state = $row["state"];
-$phonenumber= $row["phonenumber"];
+if(isset($_POST["delete"])){
+     $sql = "Delete FROM Books Where ISBN = " . $_POST["bookISBN"] ;
+     if ($db->query($sql) === TRUE) {
+        $successmessage = "Deleted " . $_POST["bookISBN"];
+     } else {
+        $errormessage = "Unsuccesful Delete";
+     }
+}else if(isset($_POST["add"])){
+     $sql = "Select Quantity FROM Books where ISBN = " . $_POST['bookISBN'];
+     $result = $db->query($sql);
+     $row = $result->fetch_assoc();
+     $currentquantity = $row["Quantity"];
+     $newquantity = intval($currentquantity) + intval($_POST['addquantity']);
+     $sql = "Update Books SET Quantity = " . $newquantity . " Where ISBN = " . $_POST['bookISBN'] . "";
+     if ($db->query($sql) === TRUE) {
+        $successmessage = "Increased " . $_POST["bookISBN"] . " by " . $_POST["addquantity"];
+     } else {
+        $errormessage = "Unsuccesful Increase";
+     }   
+}else{
+}
 
-$conn->close();
 ?>
-
 
 <!DOCTYPE html>
 <html>
 <head>
+<script src="js/js/jquery-1.6.2.min.js" type="text/javascript"></script> 
+<script src="js/js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
+<script>
+	$(document).ready(function() {
+		$( "#title" ).click(function() {
+			$.ajax({
+				url: 'searchBook.php', 
+				data: {searchBook: "Title"},
+				success: function(data){
+					$('#booktable').html(data);	
+				
+				}
+			});
+		});
+		
+	});
+	$(document).ready(function() {
+		$( "#author" ).click(function() {
+			$.ajax({
+				url: 'searchBook.php', 
+				data: {searchBook: "Author"},
+				success: function(data){
+					$('#booktable').html(data);	
+				}
+			});
+		});
+		
+	});
+	$(document).ready(function() {
+		$( "#genre" ).click(function() {
+			$.ajax({
+				url: 'searchBook.php', 
+				data: {searchBook: "Genre"},
+				success: function(data){
+					$('#booktable').html(data);	
+				}
+			});
+		});
+		
+	});
+	$(document).ready(function() {
+		$( "#date" ).click(function() {
+			$.ajax({
+				url: 'searchBook.php', 
+				data: {searchBook: "Date"},
+				success: function(data){
+					$('#booktable').html(data);	
+				}
+			});
+		});
+		
+	});
+	$(document).ready(function() {
+		$( "#price" ).click(function() {
+			$.ajax({
+				url: 'searchBook.php', 
+				data: {searchBook: "Price"},
+				success: function(data){
+					$('#booktable').html(data);	
+				}
+			});
+		});
+		
+	});
+	$(document).ready(function() {
+		$( "#quantity" ).click(function() {
+			$.ajax({
+				url: 'searchBook.php', 
+				data: {searchBook: "Quantity"},
+				success: function(data){
+					$('#booktable').html(data);	
+				}
+			});
+		});
+		
+	});
+	$(document).ready(function() {
+		$( "#publisher" ).click(function() {
+			$.ajax({
+				url: 'searchBook.php', 
+				data: {searchBook: "Publisher"},
+				success: function(data){
+					$('#booktable').html(data);	
+				}
+			});
+		});
+		
+	});
+	$(document).ready(function() {
+		$( "#publisherprice" ).click(function() {
+			$.ajax({
+				url: 'searchBook.php', 
+				data: {searchBook: "Publisher_Price"},
+				success: function(data){
+					$('#booktable').html(data);	
+				}
+			});
+		});
+		
+	});
+	/*
+	$(document).ready(function() {
+		$( "#add" ).click(function() {
+			$.ajax({
+				url: 'adddeletebook.php', 
+				data: { ISBN: $("#bookISBN").val(),
+				Quantity: $( "#addquantity" ).val()},
+				success: function(data){
+					$('#adddelete').html(data);	
+				}
+			});
+		});
+		
+	});
+	$(document).ready(function() {
+		$( "#delete" ).click(function() {
+			$.ajax({
+				url: 'adddeletebook.php', 
+				data: {delete: "true", 
+				ISBN: $("#bookISBN").val() },
+				success: function(data){
+					$('#adddelete').html(data);	
+				}
+			});
+		});
+		
+	});*/
+</script>
+
 <title>DELK's Books: The best online shop to find your books</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <!-- Custom Theme files -->
 <!--theme style-->
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />	
 <script src="js/jquery.min.js"></script>
-
 <!--//theme style-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -81,8 +219,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 			 <!---->		 
 			 <div class="top-nav">
-				<ul class="memenu skyblue" style="width: 120%""><li class="active"><a href="index.php">Home</a></li>
-					<li class="grid"><a href="product.php">Books</a>
+				<ul class="memenu skyblue" style="width: 140%"">
+					<li class="grid"><a href="customer.php">Customers</a>
 						<!--div class="mepanel">
 							<div class="row">
 								<div class="col1 me-one">
@@ -126,17 +264,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</div>
 						</div>
 					</li-->
-					<li class="grid"><a href="#">Genres</a>
-						<div class="mepanel" style="width: 115px; margin-left: 160px;">
+					<li class="grid"><a href="book.php">Books</a>
+						<!--<div class="mepanel" style="width: 115px; margin-left: 160px;">
+							<!--
 							<div class="row">
 								<div class="col1 me-one">
-									
+								<!--	
 									<ul>
-										<li><a href="product.php?genre=Fiction">Fiction</a></li>
-										<li><a href="product.php?genre=Non-Fiction">Non-Fiction</a></li>
-										<li><a href="product.php?genre=Children">Children</a></li>
-										<li><a href="product.php?genre=Lifestyle">Lifestyle</a></li>
-										<li><a href="product.php?genre=Textbook">Textbook</a></li>
+										<li><a href="product.html">Fiction</a></li>
+										<li><a href="product.html">Non-Fiction</a></li>
+										<li><a href="product.html">Children</a></li>
+										<li><a href="product.html">Lifestyle</a></li>
+										<li><a href="product.html">Textbook</a></li>
 										
 									</ul>
 								</div>
@@ -164,11 +303,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<li><a href="product.html">Anchor</a></li>										
 									</ul>	
 								</div-->
-							</div>
+					<!--		</div>
 						</div>
-					</li>
-					<!--li class="grid"><a href="typo.html">Typo</a></li-->
-					<li class="grid"><a href="about.php">About</a>
+					</li> -->
+					<li class="grid"><a href="employee.php">Employees</a></li>
+					<li class="grid"><a href="publisher.php">Publishers</a>
 					<!--
 					<div class="mepanel" style="width: 115px; margin-left: 265px;">
 							<div class="row">
@@ -181,17 +320,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</div>
 								</div>-->
 					</li>	
-					<?php 
-					if(isset($_SESSION["firstName"])){
-						echo '<li class="grid"><a href="member.php">Account</a> </li>';
-						echo '<div style="margin-top: 3%; margin-left: 80%;"> Welcome Customer ' . $_SESSION["firstName"] . ' ' . $_SESSION["lastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ;
-					}else if(isset($_SESSION["employeefirstName"])){
-						echo '<li class="grid"><a style="width: 130px; height: 97px;" href="member.php">Employee Dashboard </a> </li>';
-						echo '<div style="margin-top: 3%; margin-left: 80%;"> Welcome Employee ' . $_SESSION["employeefirstName"] . ' ' . $_SESSION["employeelastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ; 
-					}else{
-						echo '<div style="margin-top: 5.5%; margin-left: 50%;"> <a href="account.php">Sign Up</a>	or  <a href="login.php">Log In</a></div>';
-					}
-					?>
+				 	<li class="grid"><a style="width: 130px; height: 97px;" href="employeedash.php">Employee Dashboard </a> </li>
+				    <?php echo'<div style="margin-top: 4%; margin-left: 50%"> Welcome Employee ' . $_SESSION["employeefirstName"] . ' ' . $_SESSION["employeelastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ; ?>
 					<!--<li class="grid"><a href="account.php">Sign Up</a>
 					</li>
 					<li class="grid"><a href="login.html">Log In</a>
@@ -199,7 +329,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</ul>				
 			 </div>
 			 <!---->
-
+			 <!--
 			 <div class="cart box_1">
 				 <a href="checkout.html">
 					<div class="total">
@@ -211,38 +341,62 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			 </div>
 			 <div class="clearfix"> </div>
 			 <!---->			 
-			 </div>
-			<div class="clearfix"> </div>
+			<!-- </div> -->
+			<div class="clearfix"> </div> 
 </div>
 <!---->	
 <div class="contact">
 	  <div class="container">
-		<?php 
-		echo '<h2 class> Hello <span>' . $_SESSION["firstName"] . '</span> </h2>  ' ;
-		?>
-		<p>Below, edit your personal information, look at your purchase history, or write a review for a book.</p>		
+	  	<h1><u>Book Information Page</u></h1>
+	  	<br></br>
+	  	<div id = "adddelete">
+	  	<h4> Order/delete more books </h4>
+	  	<?php
+	  	echo '<b> ' . $errormessage .'</b>';
+        echo '<b> ' . $successmessage . '</b>';
+        if(isset($errormessage) || isset($successmessage)){
+          echo '<br></br>';
+        }?>
+	  	Title:
+	  	<form action=book.php method = post>
+	  	<select name = "bookISBN">
+                <?php 
+                $servername = "stardock.cs.virginia.edu";
+				$username = "cs4750s17elk2fw";
+				$serverpassword ="cs4750";
+				$dbname = "cs4750s17elk2fw";
+
+				$conn = new mysqli($servername, $username, $serverpassword, $dbname);
+				if($conn->connect_error){
+					die("Connection failed: ". $conn->connect_error);
+				}
+				$sql = "Select ISBN, Title From BookInfo" ;
+
+				$result = $conn->query($sql);
+
+				while($row = $result->fetch_assoc()){
+					echo '<option value = " ' . $row['ISBN']  . '"/>'  . $row['Title'] . '</option>';
+				}
+				$conn->close();
+        		?>
+        </select>
+        <br></br>
+        Quantity:
+        <input type="number" name="addquantity" placeholder="0" min="0" max="1000" required/>
+        <br></br>
+	  	<!--<button id="add">Increase</button>
+	  	<button id="delete">Delete</button>-->
+	  	<button name="add" value="add">Increase</button>
+	  	<button name="delete" value = "delete">Delete</button>
+	  	</form>
+	  	</div>
+	  	<br></br>
+	  	<hr COLOR="black" NOSHADE></hr>
+	  	<br></br>
+		<button id="title">Order by Title</button> <button id="author">Order by Author</button> <button id="genre">Order by Genre</button> <button id="date">Order by Date</button> <button id="price">Order by Book Price</button> <button id="quantity">Order by Quantity</button> <button id="publisher">Order by Publisher</button> <button id="publisherprice">Order by Publisher Price</button>
 		<br></br>
-		<p><font size = "5px"> <u>Personal Information:</u></font>
-			<br></br>
-			<div class = "boxed">
-			<b><font size="3px"> First Name: </b><?php echo "$fname" ; ?></font>
-			<span style="margin-left: 3em;"><b><font size="3px"> Last Name: </b><?php echo "$lname" ; ?></font></span>
-			<br></br>
-			<b><font size="3px"> Street Address: </b><?php echo "$address" ; ?></font> 
-			<br></br>
-			<b><font size="3px"> City: </b><?php echo "$city" ; ?></font>
-			<br></br>
-			<b><font size="3px"> State: </b><?php echo "$state" ; ?></font> 
-			<span style="margin-left: 3em;"><b><font size="3px"> Zip Code: </b><?php echo "$zipcode" ; ?></font></span>
-			<br></br>
-			<b><font size="3px"> Phone Number: </b><?php echo "$phonenumber" ; ?></font>
-			<br></br>
-			<h1><a href="modifyPersonal.php"><span class="label label-info">Modify Personal Information</span></a></h1>
-			</div>
-		</p>
-		<hr COLOR="black" NOSHADE></hr>
-		<p><font size = "5px"><u> Order History:</u></font>
 		<br></br>
+		<div id = "booktable">
 		<?php
 			$servername = "stardock.cs.virginia.edu";
 			$username = "cs4750s17elk2fw";
@@ -253,34 +407,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			if($conn->connect_error){
 				die("Connection failed: ". $conn->connect_error);
 			}
-			$email = $_SESSION['email'];
-			$sql = "Select ISBN, Title, transaction_id, dateTransaction, quantityBought, bookPrice, totalPrice from PlacesOrder Natural Join Books where email = '$email' ORDER BY transaction_id ASC" ;
-			$result = $conn->query($sql);
-
-			if ($result->num_rows > 0) {
-    		// output data of each row
-				echo '<table class="table1">';
-				echo '<tr> <th> <u> Transaction ID </u> </th> <th><u> Date </u> </th> <th> <u> Book ISBN </u></th> <th> <u> Book Title </u> </th> <th> <u> Quantity </u> </th> <th> <u> Book Price($USD) </u> </th> <th> <u> Total Price($USD)</tr>';
-	    		while($row = $result->fetch_assoc()) {
-	        		echo '<tr> <td> '. $row['transaction_id'] . ' </td> <td>' . $row['dateTransaction'] . ' </td> <td> ' . $row['ISBN'] . '</td> <td> '. $row['Title'] . ' </td> <td> ' . $row['quantityBought'] . '</td><td>'. $row['bookPrice'] . '</td> <td>' . $row['totalPrice'] . '</td></tr>';
-	   			} 			
-		   		echo '</table>';
-				echo '<br></br>';
-			} else {
-    			echo '<h3> None </h3>';
-    		}
-
-    		if($result->num_rows>0){
-			echo '<h1><a href="reviewBook.php"><span class="label label-info" style="margin-left: 910px;">Review Book(s)</span></a></h1>';
-			}
-
-    		$conn->close();
+			 $stmt = $conn->stmt_init();
+			  $stmt->prepare("select * from BookInfo");
+			  $stmt->execute();
+	          $stmt->bind_result($isbn, $title, $author, $genre, $date, $binding, $price, $quantity, $publisher, $publisherprice);
+	          echo '<table class = "table1">';
+	          echo '<th>ISBN</th><th>Title</th><th>Author</th><th>Genre</th><th>Date</th><th>Binding</th><th>Price</th><th>Quantity</th><th>Publisher</th><th>Publisher Price</th>';
+	          while($stmt->fetch()) {
+	                    echo "<tr><td>$isbn</td><td>$title</td><td>$author</td><td>$genre</td><td>$date</td><td>$binding</td><td>$price</td><td>$quantity</td><td>$publisher</td><td>$publisherprice</td></tr>";
+	          }
+	         echo '</table>';
+    		$conn->close(); 
 	    ?>
-		</p>
+		</div>
+
 	</div>
 </div>
 <!---->
-<!---->
+
 <!---->
 <!--<div class="subscribe">
 	 <div class="container">
@@ -308,7 +452,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li><a href="#">Best Reviewed</a></li>	
 					</ul>					
 			 </div>
-			 <div class="col-md-3 ftr-grid">
+			<div class="col-md-3 ftr-grid">
 					<h3>More Info</h3>
 					<ul class="nav-bottom">
 					  <?php

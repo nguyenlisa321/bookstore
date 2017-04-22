@@ -1,50 +1,42 @@
 <?php
 
 session_start();
-if(!isset($_SESSION['firstName'])){
+if(!isset($_SESSION['employeefirstName'])){
 	session_unset();
 	session_destroy();
 	header('Location: login.php');
 	exit();
 }
-
-$servername = "stardock.cs.virginia.edu";
-$username = "cs4750s17elk2fw";
-$serverpassword ="cs4750";
-$dbname = "cs4750s17elk2fw";
-
-$conn = new mysqli($servername, $username, $serverpassword, $dbname);
-if($conn->connect_error){
-	die("Connection failed: ". $conn->connect_error);
-}
-$email = $_SESSION['email'];
-$sql = "Select fname, lname, address, city, state, zipcode, phonenumber from Customer where email = '$email'" ;
-$result = $conn->query($sql);
-
-$row = mysqli_fetch_assoc($result);
-
-$fname = $row["fname"];
-$lname = $row["lname"];
-$address = $row["address"];
-$city = $row["city"];
-$zipcode = $row["zipcode"];
-$state = $row["state"];
-$phonenumber= $row["phonenumber"];
-
-$conn->close();
 ?>
-
 
 <!DOCTYPE html>
 <html>
 <head>
+<script src="js/js/jquery-1.6.2.min.js" type="text/javascript"></script> 
+<script src="js/js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
+<script>
+	$(document).ready(function() {
+		$( "#searchCustomerNameinput" ).change(function() {
+		
+			$.ajax({
+				url: 'searchCustomerName.php', 
+				data: {searchCustomerName: $( "#searchCustomerNameinput" ).val()},
+				success: function(data){
+					$('#searchCustomerNameresult').html(data);	
+				
+				}
+			});
+		});
+		
+	});
+</script>
+
 <title>DELK's Books: The best online shop to find your books</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <!-- Custom Theme files -->
 <!--theme style-->
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />	
 <script src="js/jquery.min.js"></script>
-
 <!--//theme style-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -81,8 +73,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 			 <!---->		 
 			 <div class="top-nav">
-				<ul class="memenu skyblue" style="width: 120%""><li class="active"><a href="index.php">Home</a></li>
-					<li class="grid"><a href="product.php">Books</a>
+				<ul class="memenu skyblue" style="width: 140%"">
+					<li class="grid"><a href="customer.php">Customers</a>
 						<!--div class="mepanel">
 							<div class="row">
 								<div class="col1 me-one">
@@ -126,17 +118,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</div>
 						</div>
 					</li-->
-					<li class="grid"><a href="#">Genres</a>
-						<div class="mepanel" style="width: 115px; margin-left: 160px;">
+					<li class="grid"><a href="book.php">Books</a>
+						<!--<div class="mepanel" style="width: 115px; margin-left: 160px;">
+							<!--
 							<div class="row">
 								<div class="col1 me-one">
-									
+								<!--	
 									<ul>
-										<li><a href="product.php?genre=Fiction">Fiction</a></li>
-										<li><a href="product.php?genre=Non-Fiction">Non-Fiction</a></li>
-										<li><a href="product.php?genre=Children">Children</a></li>
-										<li><a href="product.php?genre=Lifestyle">Lifestyle</a></li>
-										<li><a href="product.php?genre=Textbook">Textbook</a></li>
+										<li><a href="product.html">Fiction</a></li>
+										<li><a href="product.html">Non-Fiction</a></li>
+										<li><a href="product.html">Children</a></li>
+										<li><a href="product.html">Lifestyle</a></li>
+										<li><a href="product.html">Textbook</a></li>
 										
 									</ul>
 								</div>
@@ -164,11 +157,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<li><a href="product.html">Anchor</a></li>										
 									</ul>	
 								</div-->
-							</div>
+					<!--		</div>
 						</div>
-					</li>
-					<!--li class="grid"><a href="typo.html">Typo</a></li-->
-					<li class="grid"><a href="about.php">About</a>
+					</li> -->
+					<li class="grid"><a href="employee.php">Employees</a></li>
+					<li class="grid"><a href="publisher.php">Publishers</a>
 					<!--
 					<div class="mepanel" style="width: 115px; margin-left: 265px;">
 							<div class="row">
@@ -181,17 +174,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</div>
 								</div>-->
 					</li>	
-					<?php 
-					if(isset($_SESSION["firstName"])){
-						echo '<li class="grid"><a href="member.php">Account</a> </li>';
-						echo '<div style="margin-top: 3%; margin-left: 80%;"> Welcome Customer ' . $_SESSION["firstName"] . ' ' . $_SESSION["lastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ;
-					}else if(isset($_SESSION["employeefirstName"])){
-						echo '<li class="grid"><a style="width: 130px; height: 97px;" href="member.php">Employee Dashboard </a> </li>';
-						echo '<div style="margin-top: 3%; margin-left: 80%;"> Welcome Employee ' . $_SESSION["employeefirstName"] . ' ' . $_SESSION["employeelastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ; 
-					}else{
-						echo '<div style="margin-top: 5.5%; margin-left: 50%;"> <a href="account.php">Sign Up</a>	or  <a href="login.php">Log In</a></div>';
-					}
-					?>
+				 	<li class="grid"><a style="width: 130px; height: 97px;" href="employeedash.php">Employee Dashboard </a> </li>
+				    <?php echo'<div style="margin-top: 4%; margin-left: 50%"> Welcome Employee ' . $_SESSION["employeefirstName"] . ' ' . $_SESSION["employeelastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ; ?>
 					<!--<li class="grid"><a href="account.php">Sign Up</a>
 					</li>
 					<li class="grid"><a href="login.html">Log In</a>
@@ -199,7 +183,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</ul>				
 			 </div>
 			 <!---->
-
+			 <!--
 			 <div class="cart box_1">
 				 <a href="checkout.html">
 					<div class="total">
@@ -211,76 +195,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			 </div>
 			 <div class="clearfix"> </div>
 			 <!---->			 
-			 </div>
-			<div class="clearfix"> </div>
+			<!-- </div> -->
+			<div class="clearfix"> </div> 
 </div>
 <!---->	
 <div class="contact">
 	  <div class="container">
-		<?php 
-		echo '<h2 class> Hello <span>' . $_SESSION["firstName"] . '</span> </h2>  ' ;
-		?>
-		<p>Below, edit your personal information, look at your purchase history, or write a review for a book.</p>		
+	  	<h1><u>Customer Search Page</u></h1>
+	  	<br></br>
+		<h2>Search for customer based on last name</h2>
+		<input class="xlarge" id="searchCustomerNameinput" type = "search" size="30" placeholder = "Customer's name contains..." /> 
 		<br></br>
-		<p><font size = "5px"> <u>Personal Information:</u></font>
-			<br></br>
-			<div class = "boxed">
-			<b><font size="3px"> First Name: </b><?php echo "$fname" ; ?></font>
-			<span style="margin-left: 3em;"><b><font size="3px"> Last Name: </b><?php echo "$lname" ; ?></font></span>
-			<br></br>
-			<b><font size="3px"> Street Address: </b><?php echo "$address" ; ?></font> 
-			<br></br>
-			<b><font size="3px"> City: </b><?php echo "$city" ; ?></font>
-			<br></br>
-			<b><font size="3px"> State: </b><?php echo "$state" ; ?></font> 
-			<span style="margin-left: 3em;"><b><font size="3px"> Zip Code: </b><?php echo "$zipcode" ; ?></font></span>
-			<br></br>
-			<b><font size="3px"> Phone Number: </b><?php echo "$phonenumber" ; ?></font>
-			<br></br>
-			<h1><a href="modifyPersonal.php"><span class="label label-info">Modify Personal Information</span></a></h1>
-			</div>
-		</p>
-		<hr COLOR="black" NOSHADE></hr>
-		<p><font size = "5px"><u> Order History:</u></font>
-		<br></br>
-		<?php
-			$servername = "stardock.cs.virginia.edu";
-			$username = "cs4750s17elk2fw";
-			$serverpassword ="cs4750";
-			$dbname = "cs4750s17elk2fw";
-
-			$conn = new mysqli($servername, $username, $serverpassword, $dbname);
-			if($conn->connect_error){
-				die("Connection failed: ". $conn->connect_error);
-			}
-			$email = $_SESSION['email'];
-			$sql = "Select ISBN, Title, transaction_id, dateTransaction, quantityBought, bookPrice, totalPrice from PlacesOrder Natural Join Books where email = '$email' ORDER BY transaction_id ASC" ;
-			$result = $conn->query($sql);
-
-			if ($result->num_rows > 0) {
-    		// output data of each row
-				echo '<table class="table1">';
-				echo '<tr> <th> <u> Transaction ID </u> </th> <th><u> Date </u> </th> <th> <u> Book ISBN </u></th> <th> <u> Book Title </u> </th> <th> <u> Quantity </u> </th> <th> <u> Book Price($USD) </u> </th> <th> <u> Total Price($USD)</tr>';
-	    		while($row = $result->fetch_assoc()) {
-	        		echo '<tr> <td> '. $row['transaction_id'] . ' </td> <td>' . $row['dateTransaction'] . ' </td> <td> ' . $row['ISBN'] . '</td> <td> '. $row['Title'] . ' </td> <td> ' . $row['quantityBought'] . '</td><td>'. $row['bookPrice'] . '</td> <td>' . $row['totalPrice'] . '</td></tr>';
-	   			} 			
-		   		echo '</table>';
-				echo '<br></br>';
-			} else {
-    			echo '<h3> None </h3>';
-    		}
-
-    		if($result->num_rows>0){
-			echo '<h1><a href="reviewBook.php"><span class="label label-info" style="margin-left: 910px;">Review Book(s)</span></a></h1>';
-			}
-
-    		$conn->close();
-	    ?>
-		</p>
+		<div id="searchCustomerNameresult"> Customer last name search results: </div>
 	</div>
 </div>
 <!---->
-<!---->
+
 <!---->
 <!--<div class="subscribe">
 	 <div class="container">
@@ -308,7 +238,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li><a href="#">Best Reviewed</a></li>	
 					</ul>					
 			 </div>
-			 <div class="col-md-3 ftr-grid">
+			<div class="col-md-3 ftr-grid">
 					<h3>More Info</h3>
 					<ul class="nav-bottom">
 					  <?php

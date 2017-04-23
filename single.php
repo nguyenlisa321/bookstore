@@ -179,17 +179,31 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		 <div class="product-price1">
 			 <div class="top-sing">
 				  <div class="col-md-7 single-top">	
+				   <?php
+$return_arr = array();
+$servername = "stardock.cs.virginia.edu";
+  $username = "cs4750s17elk2fw";
+  $serverpassword ="cs4750";
+  $dbname = "cs4750s17elk2fw";
+$db = new mysqli($servername, $username, $serverpassword, $dbname);
+        if ($db->connect_error):
+        die ("Could not connect to db: " . $db->connect_error);
+        endif;
+     
+$query = "SELECT * FROM Books WHERE ISBN = " . $_GET['book']; #Define query
+
+$result= $db->query($query) or die ("Invalid select " . $db->error);
+           #Eval and store result
+$row = $result->fetch_assoc();
+?>
+
 					 <div class="flexslider">
 							  <ul class="slides">
-								<li data-thumb="images/si.jpg">
-									<div class="thumb-image"> <img src="images/si.jpg" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+								<li data-thumb=<?php echo $row['PicturePath']?>>
+									<div class="thumb-image"> <img src=<?php echo $row['PicturePath']?> data-imagezoom="true" class="img-responsive" alt=""/> </div>
 								</li>
-								<li data-thumb="images/si2.jpg">
-									 <div class="thumb-image"> <img src="images/si2.jpg" data-imagezoom="true" class="img-responsive" alt=""/> </div>
-								</li>
-								<li data-thumb="images/si3.jpg">
-								   <div class="thumb-image"> <img src="images/si3.jpg" data-imagezoom="true" class="img-responsive" alt=""/> </div>
-								</li> 
+								
+								
 							  </ul>
 						</div>					 					 
 					 <script src="js/imagezoom.js"></script>
@@ -207,15 +221,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				 </div>	
 			     <div class="col-md-5 single-top-in simpleCart_shelfItem">
 					  <div class="single-para ">
-						 <h4>DELK's Books Wood Carved Mop Glass Double Wall Lamp </h4>							
-							<h5 class="item_price">$ 500.00</h5>							
-							<p class="para">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, Vivamus porttitor tincidunt elementum nisi a, euismod rhoncus urna. Curabitur scelerisque vulputate diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat </p>
+						 <h2><?php echo $row['Title']?> </h2>			
+						 <h4><?php echo $row['Author']?>	</h4>			
+							<h5 class="item_price">$ <?php echo $row['Price']?></h5>
+
+							<p class="para"><?php echo $row['Description']?> </p>
 							<div class="prdt-info-grid">
 								 <ul>
-									 <li>- Brand : Fos DELK's Books</li>
-									 <li>- Dimensions : (LXBXH) in cms of...</li>
-									 <li>- Color : Brown</li>
-									 <li>- Material : Wood</li>
+									 <li>- Binding : <?php echo $row['Binding']?></li>
+									 <li>- Publisher : <?php echo $row['Publisher']?></li>
+									 <li>- Date : <?php echo $row['Date']?></li>
+									 <li>- Genre : <?php echo $row['Genre']?></li>
 								 </ul>
 							</div>
 							<div class="check">
@@ -227,7 +243,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								  <button type="submit" class="btn btn-default">Verify</button>
 							 </form>
 						    </div>
-							<a href="#" class="add-cart item_add">ADD TO CART</a>							
+							<a href="#" class="add-cart item_add">BUY</a>							
 					 </div>
 				 </div>
 				 <div class="clearfix"> </div>

@@ -12,8 +12,8 @@ if(!isset($_SESSION['employeefirstName'])){
 <!DOCTYPE html>
 <html>
 <head>
-<script src="js/js/jquery-1.6.2.min.js" type="text/javascript"></script> 
-<script src="js/js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
+<script src="js/jquery-1.6.2.min.js" type="text/javascript"></script> 
+<script src="js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
 <script>
 	$(document).ready(function() {
 		$( "#searchCustomerNameinput" ).change(function() {

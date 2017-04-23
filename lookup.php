@@ -9,15 +9,19 @@ $db = new mysqli($servername, $username, $serverpassword, $dbname);
         die ("Could not connect to db: " . $db->connect_error);
         endif;
      
-$query = "SELECT Title, Author, Price, PicturePath, Genre, ISBN FROM Books"; #Define query
+$query = "SELECT * FROM Books WHERE ISBN = " . $_GET['book']; #Define query
+
 $result= $db->query($query) or die ("Invalid select " . $db->error);
            #Eval and store result
-while ($row = $result->fetch_assoc()) {
+$row = $result->fetch_assoc();
+echo var_dump($row);
+//echo $row['ISBN'];
+//while ($row = $result->fetch_assoc()) {
   //echo var_dump($row);
-  array_push($return_arr,$row);
-}
+  //array_push($return_arr,$row);
+//}
 
 
 
-echo json_encode($return_arr);
+//echo json_encode($return_arr);
 ?>

@@ -6,6 +6,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <?php
 session_start();
+if(isset($_SESSION['employeefirstName'])){
+	header('Location: employeedash.php');
+	exit();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -154,7 +158,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 					</li>
 					<!--li class="grid"><a href="typo.html">Typo</a></li-->
-					<li class="grid"><a href="contact.html">About</a>
+					<li class="grid"><a href="about.php">About</a>
+					<!--
 					<div class="mepanel" style="width: 115px; margin-left: 265px;">
 							<div class="row">
 								<div class="col1 me-one">	
@@ -164,8 +169,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									</ul>
 								</div>
 								</div>
-								</div>
-					</li>	
+								</div>-->
+					</li>		
 					<?php 
 					if(isset($_SESSION["firstName"])){
 						echo '<li class="grid"><a href="member.php">Account</a> </li>';
@@ -261,8 +266,9 @@ $.post("books.php",
 						</div>
 					</div>	 -->
 					
-					 
+			<!--		 
 			</div>
+			
 			<div class="rsidebar span_1_of_left">
 				 <section  class="sky-form">
 					 <div class="product_right">
@@ -327,6 +333,7 @@ $.post("books.php",
 					      </div>
 						  
 						  <!--script-->
+						<!--
 						<script>
 							$(document).ready(function(){
 								$(".tab1 .single-bottom").hide();
@@ -373,8 +380,8 @@ $.post("books.php",
 							});
 						</script>
 						<!-- script -->					 
-				 </section>
-				 
+				<!-- </section> -->
+				 <!--
 				 <section  class="sky-form">
 					 <h4><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>DISCOUNTS</h4>
 					 <div class="row row1 scroll-pane">
@@ -388,8 +395,8 @@ $.post("books.php",
 								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Other(50)</label>
 						 </div>
 					 </div>
-				 </section>  				 
-				   
+				 </section>  -->				 
+				  <!--
 				 <section  class="sky-form">
 						<h4><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>Price</h4>
 							<ul class="dropdown-menu1">
@@ -400,6 +407,7 @@ $.post("books.php",
 						  </ul>
 				   </section>
 				   <!---->
+				   <!--
 					 <script type="text/javascript" src="js/jquery-ui.min.js"></script>
 					 <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
 					<script type='text/javascript'>//<![CDATA[ 
@@ -418,7 +426,7 @@ $.post("books.php",
 					</script>
 					 <!---->
   
-				   
+				 <!--
 				 <section  class="sky-form">
 						<h4><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>Type</h4>
 							<div class="row row1 scroll-pane">
@@ -451,10 +459,10 @@ $.post("books.php",
 							</div>
 				   </section>				   
 			 </div>				 
-	      </div>
+	      </div> -->
 		</div>
 </div>
-<!---->
+<!--
 <div class="subscribe">
 	 <div class="container">
 		 <h3>Newsletter</h3>
@@ -470,36 +478,28 @@ $.post("books.php",
 		 <div class="footer-grids">
 			 <div class="col-md-3 about-us">
 				 <h3>About Us</h3>
-				 <p>Maecenas nec auctor sem. Vivamus porttitor tincidunt elementum nisi a, euismod rhoncus urna. Curabitur scelerisque vulputate arcu eu pulvinar. Fusce vel neque diam</p>
+				 <p>We sell books. You buy our books. Everyone is happy.</p>
 			 </div>
-			 <div class="col-md-3 ftr-grid">
+			<div class="col-md-3 ftr-grid">
 					<h3>Information</h3>
 					<ul class="nav-bottom">
-						<li><a href="#">Track Order</a></li>
-						<li><a href="#">New Products</a></li>
-						<li><a href="#">Location</a></li>
-						<li><a href="#">Our Stores</a></li>
-						<li><a href="#">Best Sellers</a></li>	
-					</ul>					
-			 </div>
-			 <div class="col-md-3 ftr-grid">
-					<h3>More Info</h3>
-					<ul class="nav-bottom">
-						<li><a href="login.html">Login</a></li>
-						<li><a href="#">FAQ</a></li>
-						<li><a href="contact.html">Contact</a></li>
-						<li><a href="#">Shipping</a></li>
-						<li><a href="#">Membership</a></li>	
+					  <?php
+				if(isset($_SESSION['employeefirstName']) || isset($_SESSION['firstName'])){
+				}else{	
+				echo	'<li><a href="login.php">Login</a></li>';
+			 }
+			 ?>
+						<li><a href="about.php">About</a></li>
 					</ul>					
 			 </div>
 			 <div class="col-md-3 ftr-grid">
 					<h3>Categories</h3>
 					<ul class="nav-bottom">
-						<li><a href="#">Car Lights</a></li>
-						<li><a href="#">LED Lights</a></li>
-						<li><a href="#">Decorates</a></li>
-						<li><a href="#">Wall Lights</a></li>
-						<li><a href="#">Protectors</a></li>	
+						<li><a href="product.php?genre=Fiction">Fiction</a></li>
+						<li><a href="product.php?genre=Non-Fiction">Non-Fiction</a></li>
+						<li><a href="product.php?genre=Children">Children</a></li>
+						<li><a href="product.php?genre=Lifestyle">Lifestyle</a></li>
+						<li><a href="product.php?genre=Textbook">Textbook</a></li>	
 					</ul>					
 			 </div>
 			 <div class="clearfix"></div>

@@ -49,8 +49,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       });
     });
   </script>
-
-
   
 <div class="header-top">
 	 <div class="header-bottom">			
@@ -164,7 +162,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						echo '<li class="grid"><a href="member.php">Account</a> </li>';
 						echo '<div style="margin-top: 3%; margin-left: 80%;"> Welcome Customer ' . $_SESSION["firstName"] . ' ' . $_SESSION["lastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ;
 					}else if(isset($_SESSION["employeefirstName"])){
-						echo '<li class="grid"><a style="width: 130px; height: 97px;" href="employeedash.php">Employee Dashboard </a> </li>';
+						echo '<li class="grid"><a style="width: 130px; height: 97px;" href="member.php">Employee Dashboard </a> </li>';
 						echo '<div style="margin-top: 3%; margin-left: 80%;"> Welcome Employee ' . $_SESSION["employeefirstName"] . ' ' . $_SESSION["employeelastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ; 
 					}else{
 						echo '<div style="margin-top: 5.5%; margin-left: 50%;"> <a href="account.php">Sign Up</a>	or  <a href="login.php">Log In</a></div>';
@@ -177,7 +175,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</ul>				
 			 </div>
 			 <!---->
-
+			 <!--
 			 <div class="cart box_1">
 				 <a href="checkout.html">
 					<div class="total">
@@ -189,7 +187,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			 </div>
 			 <div class="clearfix"> </div>
 			 <!---->			 
-			 </div>
+			 <!--</div> -->
 			<div class="clearfix"> </div>
 </div>
 <!---->	
@@ -199,24 +197,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	         <li>
 				 <div class="banner1">				  
 					  <div class="banner-info">
-					  <h3>Morbi lacus hendrerit efficitur.</h3>
-					  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit.</p>
+					  <h3>Books for you</h3>
+					  <p>Buy our books please.</p>
 					  </div>
 				 </div>
 	         </li>
 	         <li>
 				 <div class="banner2">
 					 <div class="banner-info">
-					 <h3>Phasellus elementum tincidunt.</h3>
-					 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit.</p>
+					 <h3>Handpicked by experts</h3>
+					 <p>Only the best books sold.</p>
 					 </div>
 				 </div>
 			 </li>
 	         <li>
 	             <div class="banner3">
 	        	 <div class="banner-info">
-	        	 <h3>Maecenas interposuere volutpat.</h3>
-	          	 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit.</p>
+	        	 <h3>Reading is essential to growth</h3>
+	          	 <p>Throw away all electronics and pick up a book</p>
 				 </div>
 				 </div>
 	         </li>
@@ -224,6 +222,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	  </div>
   </div>
 <!---->
+<!--
 <script src="js/bootstrap.js"> </script>
 
 <div class="items">
@@ -341,7 +340,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	 </div>
 </div>
 <!---->
-<div class="offers">
+<!--<div class="offers">
 	 <div class="container">
 	 <h3>End of Season Sale</h3>
 	 <div class="offer-grids">
@@ -394,17 +393,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				 <h3>About Us</h3>
 				 <p>We sell books. You buy our books. Everyone is happy.</p>
 			 </div>
-			 <div class="col-md-3 ftr-grid">
-					<h3>Information</h3>
-					<ul class="nav-bottom">
-						<li><a href="#">Track Order</a></li>
-						<li><a href="#">New Products</a></li>
-						<li><a href="#">Our Stores</a></li>
-						<li><a href="#">Best Reviewed</a></li>	
-					</ul>					
-			 </div>
 			<div class="col-md-3 ftr-grid">
-					<h3>More Info</h3>
+					<h3>Information</h3>
 					<ul class="nav-bottom">
 					  <?php
 				if(isset($_SESSION['employeefirstName']) || isset($_SESSION['firstName'])){
@@ -418,11 +408,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			 <div class="col-md-3 ftr-grid">
 					<h3>Categories</h3>
 					<ul class="nav-bottom">
-						<li><a href="#">Fiction</a></li>
-						<li><a href="#">Non-Fiction</a></li>
-						<li><a href="#">Children</a></li>
-						<li><a href="#">Lifestyle</a></li>
-						<li><a href="#">Textbook</a></li>	
+						<li><a href="product.php?genre=Fiction">Fiction</a></li>
+						<li><a href="product.php?genre=Non-Fiction">Non-Fiction</a></li>
+						<li><a href="product.php?genre=Children">Children</a></li>
+						<li><a href="product.php?genre=Lifestyle">Lifestyle</a></li>
+						<li><a href="product.php?genre=Textbook">Textbook</a></li>	
 					</ul>					
 			 </div>
 			 <div class="clearfix"></div>

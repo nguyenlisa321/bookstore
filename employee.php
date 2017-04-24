@@ -600,36 +600,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				 <h3>About Us</h3>
 				 <p>We sell books. You buy our books. Everyone is happy.</p>
 			 </div>
-			 <div class="col-md-3 ftr-grid">
-					<h3>Information</h3>
-					<ul class="nav-bottom">
-						<li><a href="#">Track Order</a></li>
-						<li><a href="#">New Products</a></li>
-						<li><a href="#">Our Stores</a></li>
-						<li><a href="#">Best Reviewed</a></li>
-					</ul>
-			 </div>
 			<div class="col-md-3 ftr-grid">
-					<h3>More Info</h3>
+					<h3>Information</h3>
 					<ul class="nav-bottom">
 					  <?php
 				if(isset($_SESSION['employeefirstName']) || isset($_SESSION['firstName'])){
-				}else{
+				}else{	
 				echo	'<li><a href="login.php">Login</a></li>';
 			 }
 			 ?>
 						<li><a href="about.php">About</a></li>
-					</ul>
+					</ul>					
 			 </div>
 			 <div class="col-md-3 ftr-grid">
 					<h3>Categories</h3>
 					<ul class="nav-bottom">
-						<li><a href="#">Fiction</a></li>
-						<li><a href="#">Non-Fiction</a></li>
-						<li><a href="#">Children</a></li>
-						<li><a href="#">Lifestyle</a></li>
-						<li><a href="#">Textbook</a></li>
-					</ul>
+						<li><a href="product.php?genre=Fiction">Fiction</a></li>
+						<li><a href="product.php?genre=Non-Fiction">Non-Fiction</a></li>
+						<li><a href="product.php?genre=Children">Children</a></li>
+						<li><a href="product.php?genre=Lifestyle">Lifestyle</a></li>
+						<li><a href="product.php?genre=Textbook">Textbook</a></li>	
+					</ul>					
 			 </div>
 			 <div class="clearfix"></div>
 		 </div>
@@ -640,12 +631,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		 <div class="copy">
 			 <p>© 2015 DELK's Books. All Rights Reserved | Design by  <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p>
 		 </div>
-		 <div class="social">
+		 <div class="social">							
 				<a href="#"><i class="facebook"></i></a>
 				<a href="#"><i class="twitter"></i></a>
-				<a href="#"><i class="dribble"></i></a>
-				<a href="#"><i class="google"></i></a>
-				<a href="#"><i class="youtube"></i></a>
+				<a href="#"><i class="dribble"></i></a>	
+				<a href="#"><i class="google"></i></a>	
+				<a href="#"><i class="youtube"></i></a>	
 		 </div>
 		 <div class="clearfix"></div>
 	 </div>

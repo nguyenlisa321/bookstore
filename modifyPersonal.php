@@ -174,10 +174,10 @@ if(strlen($fnameError)==0 && strlen($lnameError)==0 && strlen($addressError)==0 
 <!DOCTYPE html>
 <html>
 <head>
-<title>DELK's Books A Ecommerce Category Flat Bootstarp Resposive Website Template | Account :: w3layouts</title>
+<title>DELK's Books: The best online shop to find your books</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <!-- Custom Theme files -->
-<!--theme-style-->
+<!--theme style-->
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />	
 <script src="js/jquery.min.js"></script>
 
@@ -201,7 +201,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script>  
     $(function () {
       $("#slider").responsiveSlides({
-      	auto: false,
+      	auto: true,
       	nav: true,
       	speed: 500,
         namespace: "callbacks",
@@ -209,7 +209,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       });
     });
   </script>
- <div class="header-top">
+  
+<div class="header-top">
 	 <div class="header-bottom">			
 				<div class="logo">
 					<h1><a href="index.php">DELK's Books</a></h1>					
@@ -334,7 +335,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</ul>				
 			 </div>
 			 <!---->
-
+			 <!--
 			 <div class="cart box_1">
 				 <a href="checkout.html">
 					<div class="total">
@@ -346,7 +347,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			 </div>
 			 <div class="clearfix"> </div>
 			 <!---->			 
-			 </div>
+			 <!--</div> -->
 			<div class="clearfix"> </div>
 </div>
 <!---->	
@@ -573,17 +574,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				 <h3>About Us</h3>
 				 <p>We sell books. You buy our books. Everyone is happy.</p>
 			 </div>
-			 <div class="col-md-3 ftr-grid">
-					<h3>Information</h3>
-					<ul class="nav-bottom">
-						<li><a href="#">Track Order</a></li>
-						<li><a href="#">New Products</a></li>
-						<li><a href="#">Our Stores</a></li>
-						<li><a href="#">Best Reviewed</a></li>	
-					</ul>					
-			 </div>
 			<div class="col-md-3 ftr-grid">
-					<h3>More Info</h3>
+					<h3>Information</h3>
 					<ul class="nav-bottom">
 					  <?php
 				if(isset($_SESSION['employeefirstName']) || isset($_SESSION['firstName'])){
@@ -597,11 +589,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			 <div class="col-md-3 ftr-grid">
 					<h3>Categories</h3>
 					<ul class="nav-bottom">
-						<li><a href="#">Fiction</a></li>
-						<li><a href="#">Non-Fiction</a></li>
-						<li><a href="#">Children</a></li>
-						<li><a href="#">Lifestyle</a></li>
-						<li><a href="#">Textbook</a></li>	
+						<li><a href="product.php?genre=Fiction">Fiction</a></li>
+						<li><a href="product.php?genre=Non-Fiction">Non-Fiction</a></li>
+						<li><a href="product.php?genre=Children">Children</a></li>
+						<li><a href="product.php?genre=Lifestyle">Lifestyle</a></li>
+						<li><a href="product.php?genre=Textbook">Textbook</a></li>	
 					</ul>					
 			 </div>
 			 <div class="clearfix"></div>

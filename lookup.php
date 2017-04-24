@@ -14,7 +14,7 @@ $query = "SELECT * FROM Books WHERE ISBN = " . $_GET['book']; #Define query
 $result= $db->query($query) or die ("Invalid select " . $db->error);
            #Eval and store result
 $row = $result->fetch_assoc();
-echo var_dump($row);
+//echo var_dump($row);
 //echo $row['ISBN'];
 //while ($row = $result->fetch_assoc()) {
   //echo var_dump($row);

@@ -399,6 +399,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	  	</div>
 	  	<br></br>
 	  	<hr COLOR="black" NOSHADE></hr>
+	  	<script type="text/javascript">
+	  		function exportJson(el) {
+
+    		$.post("books.php",
+      function(data,status){
+            
+             var obj = JSON.parse(data);
+             var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj));
+    // what to return in order to show download window?
+
+    		el.setAttribute("href", "data:"+data);
+    	el.setAttribute("download", "data.json");
+        });
+    	
+    
+		}
+	  	</script>
+	  	<button><a id="exportJSON" onclick="exportJson(this);" class="btn"><i class="icon-download"></i> Export JSON</a></button>
+	  	<br></br>
+	  	<hr COLOR="black" NOSHADE></hr>
 	  	<br></br>
 		<button id="title">Order by Title</button> <button id="author">Order by Author</button> <button id="genre">Order by Genre</button> <button id="date">Order by Date</button> <button id="price">Order by Book Price</button> <button id="quantity">Order by Quantity</button> <button id="publisher">Order by Publisher</button> <button id="publisherprice">Order by Publisher Price</button>
 		<br></br>

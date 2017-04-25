@@ -23,7 +23,7 @@
         $actualQuantity = $row['Quantity'];
 
        if($quantityBought > $actualQuantity || $quantityBought <= 0 ) {
-        $errormessage = "Please buy between 0 and " . $actualQuantity . " copies of this book";
+        $errormessage = '<span style="color: red;"> Please buy between 0 and ' . $actualQuantity . ' copies of this book </span>';
         echo $errormessage;
         $db->close();
        }else{
@@ -43,7 +43,7 @@
             $sql = "Insert into Buys (email, ISBN, transaction_id, dateTransaction, quantityBought, bookPrice, totalPrice) Values ('$emailID', '$bookID', '$transactionid', '$date', '$quantityBought', '$bookPrice', '$totalPrice' ) ";
              
              if ($db->query($sql) === TRUE) {
-                echo "Succesfully bought " . $quantityBought . " copies";
+                echo '<span style="color: red;"> Succesfully bought ' . $quantityBought . " copies </span>";
                 $db->close();
              }else{
                 echo "Couldn't buy book: " . $db->error;

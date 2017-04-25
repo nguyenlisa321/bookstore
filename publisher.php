@@ -5,6 +5,9 @@ if(!isset($_SESSION['employeefirstName'])){
 	session_destroy();
 	header('Location: login.php');
 	exit();
+}else if($_SESSION['employeePosition'] == "General"){
+	header('Location: employeedash.php');
+	exit();
 }
 
 $servername = "stardock.cs.virginia.edu";
@@ -152,8 +155,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<!--		</div>
 						</div>
 					</li> -->
-					<li class="grid"><a href="employee.php">Employees</a></li>
-					<li class="grid"><a href="publisher.php">Publishers</a>
+					<?php 
+					if ($_SESSION['employeePosition'] != "General"){
+					echo '<li class="grid"><a href="employee.php">Employees</a></li>';
+					echo '<li class="grid"><a href="publisher.php">Publishers</a>';
+					}?>
+
 					<!--
 					<div class="mepanel" style="width: 115px; margin-left: 265px;">
 							<div class="row">

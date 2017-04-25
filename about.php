@@ -1,4 +1,4 @@
-<!--A Design by W3layouts 
+<!--A Design by W3layouts
 Author: W3layout
 Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
@@ -6,8 +6,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <?php
 session_start();
-if(isset($_SESSION['employeefirstName'])){
-	header('Location: employeedash.php');
+if(!isset($_SESSION['employeefirstName'])){
+	session_unset();
+	session_destroy();
+	header('Location: login.php');
 	exit();
 }
 ?>
@@ -18,13 +20,13 @@ if(isset($_SESSION['employeefirstName'])){
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <!-- Custom Theme files -->
 <!--theme style-->
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />	
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 <script src="js/jquery.min.js"></script>
 
 <!--//theme style-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Wedding Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+<meta name="keywords" content="Wedding Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- start menu -->
@@ -32,13 +34,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- start menu -->
 <link href="css/memenu.css" rel="stylesheet" type="text/css" media="all" />
 <script type="text/javascript" src="js/memenu.js"></script>
-<script>$(document).ready(function(){$(".memenu").memenu();});</script>	
+<script>$(document).ready(function(){$(".memenu").memenu();});</script>
 <!-- /start menu -->
 </head>
-<body> 
-<!--header-->	
+<body>
+<!--header-->
 <script src="js/responsiveslides.min.js"></script>
-<script>  
+<script>
     $(function () {
       $("#slider").responsiveSlides({
       	auto: true,
@@ -49,13 +51,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       });
     });
   </script>
-  
+
 <div class="header-top">
-	 <div class="header-bottom">			
+	 <div class="header-bottom">
 				<div class="logo">
-					<h1><a href="index.php">DELK's Books</a></h1>					
+					<h1><a href="index.php">DELK's Books</a></h1>
 				</div>
-			 <!---->		 
+			 <!---->
 			 <div class="top-nav">
 				<ul class="memenu skyblue" style="width: 120%""><li class="active"><a href="index.php">Home</a></li>
 					<li class="grid"><a href="product.php">Books</a>
@@ -66,7 +68,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<ul>
 										<li><a href="product.html">New Arrivals</a></li>
 										<li><a href="product.html">Home</a></li>
-									
+
 										<li><a href="product.html">Decorates</a></li>
 										<li><a href="product.html">Accessories</a></li>
 										<li><a href="product.html">Kids</a></li>
@@ -84,7 +86,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<li><a href="product.html">Ceiling Lights</a></li>
 										<li><a href="product.html">Accessories</a></li>
 										<li><a href="product.html">Lanterns</a></li>
-									</ul>	
+									</ul>
 								</div>
 								<div class="col1 me-one">
 									<h4>Popular Brands</h4>
@@ -97,7 +99,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<li><a href="product.html">Ave</a></li>
 										<li><a href="product.html">Gold Medal</a></li>
 										<li><a href="product.html">Anchor</a></li>
-									</ul>	
+									</ul>
 								</div>
 							</div>
 						</div>
@@ -106,14 +108,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<div class="mepanel" style="width: 115px; margin-left: 160px;">
 							<div class="row">
 								<div class="col1 me-one">
-									
+
 									<ul>
 										<li><a href="product.php?genre=Fiction">Fiction</a></li>
 										<li><a href="product.php?genre=Non-Fiction">Non-Fiction</a></li>
 										<li><a href="product.php?genre=Children">Children</a></li>
 										<li><a href="product.php?genre=Lifestyle">Lifestyle</a></li>
 										<li><a href="product.php?genre=Textbook">Textbook</a></li>
-										
+
 									</ul>
 								</div>
 								<!--div class="col1 me-one">
@@ -125,7 +127,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<li><a href="product.html">Ceiling Lights</a></li>
 										<li><a href="product.html">Accessories</a></li>
 										<li><a href="product.html">Lanterns</a></li>
-									</ul>	
+									</ul>
 								</div>
 								<div class="col1 me-one">
 									<h4>Popular Brands</h4>
@@ -137,18 +139,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<li><a href="product.html">Jaguar</a></li>
 										<li><a href="product.html">Ave</a></li>
 										<li><a href="product.html">Gold Medal</a></li>
-										<li><a href="product.html">Anchor</a></li>										
-									</ul>	
+										<li><a href="product.html">Anchor</a></li>
+									</ul>
 								</div-->
 							</div>
 						</div>
 					</li>
 					<!--li class="grid"><a href="typo.html">Typo</a></li-->
-					<li class="grid"><a href="about.php">About</a>
 					<!--
 					<div class="mepanel" style="width: 115px; margin-left: 265px;">
 							<div class="row">
-								<div class="col1 me-one">	
+								<div class="col1 me-one">
 									<ul>
 										<li><a href="product.html">Contact</a></li>
 										<li><a href="product.html">About Us</a></li>
@@ -156,14 +157,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</div>
 								</div>
 								</div>-->
-					</li>	
-					<?php 
+					</li>
+					<?php
 					if(isset($_SESSION["firstName"])){
 						echo '<li class="grid"><a href="member.php">Account</a> </li>';
 						echo '<div style="margin-top: 3%; margin-left: 80%;"> Welcome Customer ' . $_SESSION["firstName"] . ' ' . $_SESSION["lastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ;
 					}else if(isset($_SESSION["employeefirstName"])){
 						echo '<li class="grid"><a style="width: 130px; height: 97px;" href="member.php">Employee Dashboard </a> </li>';
-						echo '<div style="margin-top: 3%; margin-left: 80%;"> Welcome Employee ' . $_SESSION["employeefirstName"] . ' ' . $_SESSION["employeelastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ; 
+						echo '<div style="margin-top: 3%; margin-left: 80%;"> Welcome Employee ' . $_SESSION["employeefirstName"] . ' ' . $_SESSION["employeelastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ;
 					}else{
 						echo '<div style="margin-top: 5.5%; margin-left: 50%;"> <a href="account.php">Sign Up</a>	or  <a href="login.php">Log In</a></div>';
 					}
@@ -172,7 +173,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</li>
 					<li class="grid"><a href="login.html">Log In</a>
 					</li>-->
-				</ul>				
+				</ul>
 			 </div>
 			 <!---->
 			 <!--
@@ -186,7 +187,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			 	<div class="clearfix"> </div>
 			 </div>
 			 <div class="clearfix"> </div>
-			 <!---->			 
+			 <!---->
 			 <!--</div> -->
 			<div class="clearfix"> </div>
 </div>
@@ -198,52 +199,55 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		  <li class="active">Contact</li>
 		 </ol>
 			<!--start contact-->
-		<!--	<h3>Contact Us</h3>
-		  <div class="section group">				
+			<br>
+			<div class="col-md-6">
+				<h1>About Us</h1>
+			</div>
+		  <div class="section group">
 				<div class="col-md-6 span_1_of_3">
-					<div class="contact_info">
-			    	 	<h4>Find Us Here</h4>
-			    	 		<div class="map">
-					   			<iframe src="https://maps.google.co.in/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Lighthouse+Point,+FL,+United+States&amp;aq=4&amp;oq=light&amp;sll=26.275636,-80.087265&amp;sspn=0.04941,0.104628&amp;ie=UTF8&amp;hq=&amp;hnear=Lighthouse+Point,+Broward,+Florida,+United+States&amp;t=m&amp;z=14&amp;ll=26.275636,-80.087265&amp;output=embed"></iframe>
-					   		</div>
-      				</div>
-      			<div class="company_address">
-				     	<h4>Company Information :</h4>
-						    	<p>500 Lorem Ipsum Dolor Sit,</p>
-						   		<p>22-56-2-9 Sit Amet, Lorem,</p>
-						   		<p>USA</p>
-				   		<p>Phone:(00) 222 666 444</p>
-				   		<p>Fax: (000) 000 00 00 0</p>
-				 	 	<p>Email: <a href="mailto:info@example.com">info@mycompany.com</a></p>
-				   		<p>Follow on: <a href="#">Facebook</a>, <a href="#">Twitter</a></p>
-				   </div>
-				</div>				
-				<div class="col-md-6 span_2_of_3">
-				  <div class="contact-form">
-					    <form>
-					    	<div>
-						    	<span><label>NAME</label></span>
-						    	<span><input name="userName" type="text" class="textbox"></span>
-						    </div>
-						    <div>
-						    	<span><label>E-MAIL</label></span>
-						    	<span><input name="userEmail" type="text" class="textbox"></span>
-						    </div>
-						    <div>
-						     	<span><label>MOBILE</label></span>
-						    	<span><input name="userPhone" type="text" class="textbox"></span>
-						    </div>
-						    <div>
-						    	<span><label>SUBJECT</label></span>
-						    	<span><textarea name="userMsg"> </textarea></span>
-						    </div>
-						   <div>
-						   		<span><input type="submit" class="mybutton" value="Submit"></span>
-						  </div>
-					    </form>
 
-				    </div>
-  				</div>				
+						<div class="contact_info">
+				    	 	<h4>Find Us Here</h4>
+				    	 		<div class="map">
+						   			<iframe src="https://maps.google.co.in/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Lighthouse+Point,+FL,+United+States&amp;aq=4&amp;oq=light&amp;sll=26.275636,-80.087265&amp;sspn=0.04941,0.104628&amp;ie=UTF8&amp;hq=&amp;hnear=Lighthouse+Point,+Broward,+Florida,+United+States&amp;t=m&amp;z=14&amp;ll=26.275636,-80.087265&amp;output=embed"></iframe>
+						   		</div>
+	      				</div>
+	      			<div class="company_address">
+					     	<h4>Company Information :</h4>
+							    	<p>85 Engineer's Way</p>
+							   		<p>Charlottesville, VA 22903</p>
+							   		<p>USA</p>
+					   		<p>Phone:(00) 222 666 444</p>
+					   		<p>Fax: (000) 000 00 00 0</p>
+					 	 	<p>Email: <a href="edward@delk.com">edward@delk.com</a></p>
+					   </div>
+					</div>
+					<div class="col-md-6 span_2_of_3">
+					  <div class="contact-form">
+						   <h4>Owners</h4>
+							 <hr>
+							 <div class="col-md-3">
+								 <h2>Edward</h2><br>
+								 <p>Computer Science Wiz wrapping up his third year at U.V.A. with a bang.</p><br>
+								 <img class="contact-img" src="images/edwardcircle.png" style="width: 75%">
+							 </div>
+							 <div class="col-md-3">
+								 <h2>Lisa</h2><br>
+								 <p>Genius Programmer who is about to graduate and kill it in the real world.</p><br>
+								 <img class="contact-img" src="images/lisacircle.png" style="width: 75%">
+							 </div>
+							 <div class="col-md-3">
+								 <h2>Karley</h2><br>
+								 <p>Third Year Computer Scientist who can't stop drinking coffee.</p><br>
+								 <img class="contact-img" src="images/karleycircle.png" style="width: 75%">
+							 </div>
+							 <div class="col-md-3">
+								 <h2>Dan</h2><br>
+								 <p>Spunky Third Year who won't return picnic blankets.</p><br>
+								 <img class="contact-img" src="images/dancircle.png" style="width: 75%">
+							 </div>
+					  </div>
+	  			</div>
 		  </div>
 	  </div>
  </div>
@@ -271,12 +275,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<ul class="nav-bottom">
 					  <?php
 				if(isset($_SESSION['employeefirstName']) || isset($_SESSION['firstName'])){
-				}else{	
+				}else{
 				echo	'<li><a href="login.php">Login</a></li>';
 			 }
 			 ?>
 						<li><a href="about.php">About</a></li>
-					</ul>					
+					</ul>
 			 </div>
 			 <div class="col-md-3 ftr-grid">
 					<h3>Categories</h3>
@@ -285,8 +289,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li><a href="product.php?genre=Non-Fiction">Non-Fiction</a></li>
 						<li><a href="product.php?genre=Children">Children</a></li>
 						<li><a href="product.php?genre=Lifestyle">Lifestyle</a></li>
-						<li><a href="product.php?genre=Textbook">Textbook</a></li>	
-					</ul>					
+						<li><a href="product.php?genre=Textbook">Textbook</a></li>
+					</ul>
 			 </div>
 			 <div class="clearfix"></div>
 		 </div>
@@ -297,12 +301,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		 <div class="copy">
 			 <p>© 2015 DELK's Books. All Rights Reserved | Design by  <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p>
 		 </div>
-		 <div class="social">							
+		 <div class="social">
 				<a href="#"><i class="facebook"></i></a>
 				<a href="#"><i class="twitter"></i></a>
-				<a href="#"><i class="dribble"></i></a>	
-				<a href="#"><i class="google"></i></a>	
-				<a href="#"><i class="youtube"></i></a>	
+				<a href="#"><i class="dribble"></i></a>
+				<a href="#"><i class="google"></i></a>
+				<a href="#"><i class="youtube"></i></a>
 		 </div>
 		 <div class="clearfix"></div>
 	 </div>

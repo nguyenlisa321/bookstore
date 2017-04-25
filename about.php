@@ -6,7 +6,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <?php
 session_start();
-if(!isset($_SESSION['employeefirstName'])){
+if(!isset($_SESSION['firstName'])){
 	session_unset();
 	session_destroy();
 	header('Location: login.php');

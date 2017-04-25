@@ -23,7 +23,7 @@
         $actualQuantity = $row['Quantity'];
 
        if($quantityBought > $actualQuantity || $quantityBought <= 0 ) {
-        $errormessage = '<span style="color: red;"> Please buy between 0 and ' . $actualQuantity . ' copies of this book </span>';
+        $errormessage = '<span style="color: red;"> Please buy between 1 and ' . $actualQuantity . ' copies of this book </span>';
         echo $errormessage;
         $db->close();
        }else{

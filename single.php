@@ -16,6 +16,8 @@ if(!isset($_SESSION['firstName'])){
 <!DOCTYPE html>
 <html>
 <head>
+<script src="js/js/jquery-1.6.2.min.js" type="text/javascript"></script>
+<script src="js/js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
 <title>DELK's Books A Ecommerce Category Flat Bootstarp Resposive Website Template | single :: w3layouts</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -205,12 +207,24 @@ $query = "SELECT * FROM Books WHERE ISBN = " . $_GET['book']; #Define query
 $result= $db->query($query) or die ("Invalid select " . $db->error);
            #Eval and store result
 $row = $result->fetch_assoc();
+
+$picturepath = $row['PicturePath'];
+$title = $row['Title'];
+$author = $row['Author'];
+$price = $row['Price'];
+$description = $row['Description'];
+$binding = $row['Binding'];
+$publisher = $row['Publisher'];
+$date = $row['Date'];
+$genre = $row['Genre'];
+$quantity = $row["Quantity"];
+
 ?>
 
 					 <div class="flexslider">
 							  <ul class="slides">
-								<li data-thumb=<?php echo $row['PicturePath']?>>
-									<div class="thumb-image"> <img src=<?php echo $row['PicturePath']?> data-imagezoom="true" class="img-responsive" alt=""/> </div>
+								<li data-thumb=<?php echo $picturepath?>>
+									<div class="thumb-image"> <img src=<?php echo $picturepath?> data-imagezoom="true" class="img-responsive" alt=""/> </div>
 								</li>
 								
 								
@@ -231,17 +245,17 @@ $row = $result->fetch_assoc();
 				 </div>	
 			     <div class="col-md-5 single-top-in simpleCart_shelfItem">
 					  <div class="single-para ">
-						 <h2><?php echo $row['Title']?> </h2>			
-						 <h4><?php echo $row['Author']?>	</h4>			
-							<h5 class="item_price">$ <?php echo $row['Price']?></h5>
+						 <h2><?php echo $title?> </h2>			
+						 <h4><?php echo $author?>	</h4>			
+							<h5 class="item_price">$ <?php echo $price ?></h5>
 
-							<p class="para"><?php echo $row['Description']?> </p>
+							<p class="para"><?php echo $description ?> </p>
 							<div class="prdt-info-grid">
 								 <ul>
-									 <li>- Binding : <?php echo $row['Binding']?></li>
-									 <li>- Publisher : <?php echo $row['Publisher']?></li>
-									 <li>- Date : <?php echo $row['Date']?></li>
-									 <li>- Genre : <?php echo $row['Genre']?></li>
+									 <li>- Binding : <?php echo $binding ?></li>
+									 <li>- Publisher : <?php echo $publisher ?></li>
+									 <li>- Date : <?php echo $date ?></li>
+									 <li>- Genre : <?php echo $genre ?></li>
 								 </ul>
 							</div>
 							<!--
@@ -254,7 +268,34 @@ $row = $result->fetch_assoc();
 								  <button type="submit" class="btn btn-default">Verify</button>
 							 </form>
 						    </div>-->
-							<a href="#" class="add-cart item_add">BUY</a>							
+						    <?php
+						    	$formstring = "single.php?=" . $_GET['book']; 
+						    ?>
+						    <script>
+$(document).ready(function() {
+		$( "#buybutton" ).click(function() {
+			$.ajax({
+				url: 'buy.php',
+				data: {bookID: "<?php echo $_GET['book']?>",
+					   emailID: "<?php echo $_SESSION['email']?>",
+					   quantityBought: $("#quantity").val(),
+					   bookPrice: "<?php echo $price ?>" },
+				success: function(data){
+					$('#messages').html(data);
+
+				}
+			});
+		});
+
+	});
+</script>
+						    <div id = "messages">
+						    </div>
+						    <div id = "buy">
+						    Quantity: <input type = "number" min="0" max="<?php echo $quantity?>" id = "quantity">
+						    <br></br>
+						    <button id= "buybutton" class="add-cart item_add"> Buy </button>
+							</div>							
 					 </div>
 				 </div>
 				 <div class="clearfix"> </div>

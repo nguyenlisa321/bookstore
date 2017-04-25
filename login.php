@@ -224,6 +224,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</ul>				
 			 </div>
 			 <!---->
+			 <!--
 			 <div class="cart box_1">
 				 <a href="checkout.html">
 					<div class="total">
@@ -235,7 +236,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			 </div>
 			 <div class="clearfix"> </div>
 			 <!---->			 
-			 </div>
+			 <!-- </div> -->
 			<div class="clearfix"> </div>
 </div>
 <!---->	

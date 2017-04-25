@@ -19,7 +19,7 @@ if($conn->connect_error){
 	die("Connection failed: ". $conn->connect_error);
 }
 $email = $_SESSION['email'];
-$sql = "SELECT ISBN FROM PlacesOrder where ISBN NOT IN(SELECT ISBN FROM Reviews where email = '$email') AND email = '$email'" ;
+$sql = "SELECT ISBN FROM Buys where ISBN NOT IN(SELECT ISBN FROM Reviews where email = '$email') AND email = '$email'" ;
 
 $result = $conn->query($sql);
 if($result->num_rows==0){
@@ -365,7 +365,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					die("Connection failed: ". $conn->connect_error);
 				}
 				$email = $_SESSION['email'];
-				$sql = "Select DISTINCT ISBN, Title FROM Books NATURAL JOIN (SELECT * FROM PlacesOrder where ISBN NOT IN(SELECT ISBN FROM Reviews where email = '$email') AND email = '$email') AS table_2" ;
+				$sql = "Select DISTINCT ISBN, Title FROM Books NATURAL JOIN (SELECT * FROM Buys where ISBN NOT IN(SELECT ISBN FROM Reviews where email = '$email') AND email = '$email') AS table_2" ;
 
 				$result = $conn->query($sql);
 

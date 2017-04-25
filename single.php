@@ -205,6 +205,10 @@ $query = "SELECT * FROM Books WHERE ISBN = " . $_GET['book']; #Define query
 $result= $db->query($query) or die ("Invalid select " . $db->error);
            #Eval and store result
 $row = $result->fetch_assoc();
+$query = "SELECT Author.* FROM `Author` NATURAL JOIN Books WHERE ISBN = '" . $_GET['book'] . "' AND Author.Name = Books.Author";
+$result= $db->query($query) or die ("Invalid select " . $db->error);
+           #Eval and store result
+$arr = $result->fetch_assoc();
 ?>
 
 					 <div class="flexslider">
@@ -258,7 +262,21 @@ $row = $result->fetch_assoc();
 					 </div>
 				 </div>
 				 <div class="clearfix"> </div>
+				 </br>
+				 <h2> Author Biography </h2>
+	  	<hr COLOR="black" NOSHADE></hr>
+	  	<div class="container">
+	  	<h4>Name: <?php echo $arr['Name'] ?></h4> 
+	  	<h4>Phone: <?php echo "(".substr($arr['Phone'], 0, 3).") ".substr($arr['Phone'], 3, 3)."-".substr($arr['Phone'],6) ?></h4> 
+	  	<h4>Email: <?php echo $arr['Email'] ?></h4> 
+	  	</br> 
+	  	<p><?php echo $arr['Bio'] ?>
+	  	</div>
+	  	</br> </br>
+	  	<h2> Reviews </h2>
+	  	<hr COLOR="black" NOSHADE></hr>
 			 </div>
+
 	     </div>
 		 <!--
 		 <div class="bottom-prdt">

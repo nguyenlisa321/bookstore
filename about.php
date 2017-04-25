@@ -13,6 +13,7 @@ if(!isset($_SESSION['firstName'])){
 	exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -145,6 +146,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</div>
 						</div>
 					</li>
+					<li class="grid"><a href="about.php">About</a>
 					<!--li class="grid"><a href="typo.html">Typo</a></li-->
 					<!--
 					<div class="mepanel" style="width: 115px; margin-left: 265px;">

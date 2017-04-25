@@ -208,12 +208,16 @@ $result= $db->query($query) or die ("Invalid select " . $db->error);
            #Eval and store result
 $row = $result->fetch_assoc();
 
-$query = "SELECT Author.* FROM `Author` NATURAL JOIN Books WHERE ISBN = '" . $_GET['book'] . "' AND Author.Name = Books.Author";
+$query = "SELECT Author.* FROM `Author` NATURAL JOIN Writes NATURAL JOIN Books WHERE ISBN = " . $_GET['book'];
 $result= $db->query($query) or die ("Invalid select " . $db->error);
            #Eval and store result
 $arr = $result->fetch_assoc();
 
-
+$query = "SELECT Reviews.*, fname, lname FROM `Reviews` NATURAL JOIN Customer WHERE ISBN =". $_GET['book'] . " ORDER BY review_date ASC";
+$result= $db->query($query) or die ("Invalid select " . $db->error);
+           #Eval and store result
+$reviews = $result->fetch_assoc();
+$reviews2 = $result->fetch_assoc();
 $picturepath = $row['PicturePath'];
 $title = $row['Title'];
 $author = $row['Author'];
@@ -317,8 +321,26 @@ $(document).ready(function() {
 	  	<p><?php echo $arr['Bio'] ?>
 	  	</div>
 	  	</br> </br>
-	  	<h2> Reviews </h2>
+	  	<h2> Recent Reviews </h2>
 	  	<hr COLOR="black" NOSHADE></hr>
+	  	<?php if(isset($reviews['fname'])) { ?>
+	  	<div class="container">
+	  	<h4> Reviewer: <?php echo $reviews['fname']. " " . $reviews['lname']?> </h4>
+	  	
+	  	<p> Rating: <?php echo $reviews['rating'] ?>/5 </p>
+	  	<p> Review: <?php echo $reviews['review_text']?> </p>
+	  	</br>
+	  	<?php if(isset($reviews2['fname'])){ ?>
+	  	<h4> Reviewer: <?php echo $reviews2['fname']. " " . $reviews2['lname']?> </h4>
+	  	
+	  	<p> Rating: <?php echo $reviews2['rating'] ?>/5 </p>
+	  	<p> Review: <?php echo $reviews2['review_text']?> </p>
+	  	<?php } ?>
+	  	</div>
+	  	<?php } 
+	  		else 
+	  			echo "<h4>No Reviews Currently</h4>";
+	  	?>
 			 </div>
 
 	     </div>

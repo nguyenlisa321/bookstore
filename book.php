@@ -354,6 +354,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!---->
 <div class="contact">
 	  <div class="container">
+			<br>
 	  	<h1><u>Book Information Page</u></h1>
 	  	<br></br>
 	  	<div id = "adddelete">
@@ -393,8 +394,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <br></br>
 	  	<!--<button id="add">Increase</button>
 	  	<button id="delete">Delete</button>-->
-	  	<button name="add" value="add">Increase</button>
-	  	<button name="delete" value = "delete">Delete</button>
+	  	<button name="add" value="add" class="btn btn-default">Increase</button>
+	  	<button name="delete" value = "delete" class="btn btn-default">Delete</button>
 	  	</form>
 	  	</div>
 	  	<br></br>
@@ -404,7 +405,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
     		$.post("books.php",
       function(data,status){
-            
+
              var obj = JSON.parse(data);
              var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj));
     // what to return in order to show download window?
@@ -412,15 +413,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     		el.setAttribute("href", "data:"+data);
     	el.setAttribute("download", "data.json");
         });
-    	
-    
+
+
 		}
 	  	</script>
-	  	<button><a id="exportJSON" onclick="exportJson(this);" class="btn"><i class="icon-download"></i> Export JSON</a></button>
-	  	<br></br>
+	  	<button class="btn btn-default"><a id="exportJSON" onclick="exportJson(this);"><i class="icon-download"></i> Export JSON</a></button>
+	  	<br>
 	  	<hr COLOR="black" NOSHADE></hr>
-	  	<br></br>
-		<button id="title">Order by Title</button> <button id="author">Order by Author</button> <button id="genre">Order by Genre</button> <button id="date">Order by Date</button> <button id="price">Order by Book Price</button> <button id="quantity">Order by Quantity</button> <button id="publisher">Order by Publisher</button> <button id="publisherprice">Order by Publisher Price</button>
+	  	<br>
+		<button id="title" class="btn btn-default">Order by Title</button>
+		<button id="author" class="btn btn-default">Order by Author</button>
+		<button id="genre" class="btn btn-default">Order by Genre</button>
+		<button id="date" class="btn btn-default">Order by Date</button>
+		<button id="price" class="btn btn-default">Order by Book Price</button>
+		<button id="quantity" class="btn btn-default">Order by Quantity</button>
+		<button id="publisher" class="btn btn-default">Order by Publisher</button>
+		<button id="publisherprice" class="btn btn-default">Order by Publisher Price</button>
 		<br></br>
 		<br></br>
 		<div id = "booktable">
@@ -475,12 +483,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<ul class="nav-bottom">
 					  <?php
 				if(isset($_SESSION['employeefirstName']) || isset($_SESSION['firstName'])){
-				}else{	
+				}else{
 				echo	'<li><a href="login.php">Login</a></li>';
 			 }
 			 ?>
 						<li><a href="about.php">About</a></li>
-					</ul>					
+					</ul>
 			 </div>
 			 <div class="col-md-3 ftr-grid">
 					<h3>Categories</h3>
@@ -489,8 +497,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li><a href="product.php?genre=Non-Fiction">Non-Fiction</a></li>
 						<li><a href="product.php?genre=Children">Children</a></li>
 						<li><a href="product.php?genre=Lifestyle">Lifestyle</a></li>
-						<li><a href="product.php?genre=Textbook">Textbook</a></li>	
-					</ul>					
+						<li><a href="product.php?genre=Textbook">Textbook</a></li>
+					</ul>
 			 </div>
 			 <div class="clearfix"></div>
 		 </div>
@@ -501,12 +509,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		 <div class="copy">
 			 <p>© 2015 DELK's Books. All Rights Reserved | Design by  <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p>
 		 </div>
-		 <div class="social">							
+		 <div class="social">
 				<a href="#"><i class="facebook"></i></a>
 				<a href="#"><i class="twitter"></i></a>
-				<a href="#"><i class="dribble"></i></a>	
-				<a href="#"><i class="google"></i></a>	
-				<a href="#"><i class="youtube"></i></a>	
+				<a href="#"><i class="dribble"></i></a>
+				<a href="#"><i class="google"></i></a>
+				<a href="#"><i class="youtube"></i></a>
 		 </div>
 		 <div class="clearfix"></div>
 	 </div>

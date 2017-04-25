@@ -64,7 +64,7 @@ if(isset($_POST["edit"])){
       $db->close();
 
 }else if(isset($_POST["delete"])){
-	
+
 	 $email = $_POST["employeeEmail"];
      $sql = "Delete FROM Employee Where email = '$email' " ;
      if ($db->query($sql) === TRUE) {
@@ -73,10 +73,10 @@ if(isset($_POST["edit"])){
         $errormessage1 = "Unsuccesful Delete";
      }
       $db->close();
-	
+
 
 }else if(isset($_POST["add"])){
-		
+
 	$tempfname = $_POST["fname"];
 	if(preg_match("/^[a-zA-Z-]+$/", $tempfname)){
 		$fname = strtoupper($tempfname);
@@ -166,7 +166,7 @@ if(isset($_POST["edit"])){
 	if(strlen($fnameError)==0 && strlen($lnameError)==0 && strlen($addressError)==0  && strlen($cityError)==0 && strlen($zipcodeError)==0 && strlen($phonenumberError)==0 && strlen($emailError)==0){
 		$smt = $db->prepare("INSERT INTO Employee (fname, lname, address, city, state, zipcode, phonenumber, email, password, position, salary) VALUES (?,?,?,?,?,?,?,?,?,?,?)" );
 	    $smt->bind_param("sssssiisssd", $fname, $lname, $address, $city, $state, $zipcode, $phonenumber, $email, $passwordHashed, $position, $salary);
-		if ($smt->execute()) { 
+		if ($smt->execute()) {
 			$successmessage3 = "Inserted '$email' ";
 		} else {
 			$errormessage3 = "Email already in use";
@@ -382,14 +382,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<br><br>
 				<hr COLOR="black" NOSHADE></hr>
-				<br><br>
+				<br>
 				<div id = "newdelete">
 		  		<h4>Delete an Employee</h4>
 				  	<?php
 				  	echo '<b> ' . $errormessage1 .'</b>';
 			        echo '<b> ' . $successmessage1 . '</b>';
 			        if(isset($errormessage1) || isset($successmessage1)){
-			          echo '<br></br>';
+			          echo '<br>';
 			        }?>
 				  		Email:
 		  				<form action=employee.php method = post>
@@ -415,18 +415,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					        		?>
 	        		</select>
 	        		<br></br>
-					  	<button name="delete" value = "delete">Delete</button>
+					  	<button name="delete" value = "delete" class="btn btn-default">Delete</button>
 					  	</form>
 
 				    <hr COLOR="black" NOSHADE></hr>
-				    <br><br>
+				    <br>
 
 					<h4>Edit Employee Salary</h4>
 						<?php
 						echo '<b> ' . $errormessage2 .'</b>';
 							echo '<b> ' . $successmessage2 . '</b>';
 							if(isset($errormessage2) || isset($successmessage2)){
-								echo '<br></br>';
+								echo '<br>';
 							}?>
 							Email:
 							<form action=employee.php method = post>
@@ -455,11 +455,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							Salary:
 							<input type="number" name="editsalary" placeholder="0" min="0" max="100000" required/>
 							<br><br>
-							<button name="edit" value="edit">Update</button>
+							<button name="edit" value="edit" class="btn btn-default">Update</button>
 							</form>
 
 							<hr COLOR="black" NOSHADE></hr>
-							<br><br>
+							<br>
 									<?php
 									echo '<b> ' . $errormessage3 .'</b>';
 										echo '<b> ' . $successmessage3 . '</b>';
@@ -548,7 +548,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						                <div>
 						                    <input type="text" name="zipcode" value="" required/>
 						                </div>
-														Phone number: <?php echo '<span style="color: red;">'.$phonenumberError.'</span>'; ?> 
+														Phone number: <?php echo '<span style="color: red;">'.$phonenumberError.'</span>'; ?>
 							                <div>
 							                    <input type="text" name="phonenumber" value="" required/>
 							                </div>
@@ -575,7 +575,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 														</div>
 						            </fieldset>
 							<br><br>
-							<button name="add" value="add">Add New Employee</button>
+							<button name="add" value="add" class="btn btn-default">Add New Employee</button>
 						</form>
 				</div>
 			</div>
@@ -605,12 +605,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<ul class="nav-bottom">
 					  <?php
 				if(isset($_SESSION['employeefirstName']) || isset($_SESSION['firstName'])){
-				}else{	
+				}else{
 				echo	'<li><a href="login.php">Login</a></li>';
 			 }
 			 ?>
 						<li><a href="about.php">About</a></li>
-					</ul>					
+					</ul>
 			 </div>
 			 <div class="col-md-3 ftr-grid">
 					<h3>Categories</h3>
@@ -619,8 +619,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li><a href="product.php?genre=Non-Fiction">Non-Fiction</a></li>
 						<li><a href="product.php?genre=Children">Children</a></li>
 						<li><a href="product.php?genre=Lifestyle">Lifestyle</a></li>
-						<li><a href="product.php?genre=Textbook">Textbook</a></li>	
-					</ul>					
+						<li><a href="product.php?genre=Textbook">Textbook</a></li>
+					</ul>
 			 </div>
 			 <div class="clearfix"></div>
 		 </div>
@@ -631,12 +631,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		 <div class="copy">
 			 <p>© 2015 DELK's Books. All Rights Reserved | Design by  <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p>
 		 </div>
-		 <div class="social">							
+		 <div class="social">
 				<a href="#"><i class="facebook"></i></a>
 				<a href="#"><i class="twitter"></i></a>
-				<a href="#"><i class="dribble"></i></a>	
-				<a href="#"><i class="google"></i></a>	
-				<a href="#"><i class="youtube"></i></a>	
+				<a href="#"><i class="dribble"></i></a>
+				<a href="#"><i class="google"></i></a>
+				<a href="#"><i class="youtube"></i></a>
 		 </div>
 		 <div class="clearfix"></div>
 	 </div>

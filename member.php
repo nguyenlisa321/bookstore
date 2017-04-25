@@ -254,7 +254,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				die("Connection failed: ". $conn->connect_error);
 			}
 			$email = $_SESSION['email'];
-			$sql = "Select ISBN, Title, transaction_id, dateTransaction, quantityBought, bookPrice, totalPrice from PlacesOrder Natural Join Books where email = '$email' ORDER BY transaction_id ASC" ;
+			$sql = "Select ISBN, Title, transaction_id, dateTransaction, quantityBought, bookPrice, totalPrice from Buys Natural Join Books where email = '$email' ORDER BY transaction_id ASC" ;
 			$result = $conn->query($sql);
 
 			if ($result->num_rows > 0) {

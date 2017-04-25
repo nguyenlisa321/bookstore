@@ -229,22 +229,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							 <div class="col-md-3">
 								 <h2>Edward</h2><br>
 								 <p>Computer Science Wiz wrapping up his third year at U.V.A. with a bang.</p><br>
-								 <img class="contact-img" src="images/edward.jpg" style="width: 75%">
+								 <img class="contact-img" src="images/edwardcircle.png" style="width: 75%">
 							 </div>
 							 <div class="col-md-3">
 								 <h2>Lisa</h2><br>
 								 <p>Genius Programmer who is about to graduate and kill it in the real world.</p><br>
-								 <img class="contact-img" src="images/lisa.jpg" style="width: 75%">
+								 <img class="contact-img" src="images/lisacircle.png" style="width: 75%">
 							 </div>
 							 <div class="col-md-3">
 								 <h2>Karley</h2><br>
 								 <p>Third Year Computer Scientist who can't stop drinking coffee.</p><br>
-								 <img class="contact-img" src="images/karley.jpg" style="width: 75%">
+								 <img class="contact-img" src="images/karleycircle.png" style="width: 75%">
 							 </div>
 							 <div class="col-md-3">
 								 <h2>Dan</h2><br>
 								 <p>Spunky Third Year who won't return picnic blankets.</p><br>
-								 <img class="contact-img" src="images/dan.jpg" style="width: 75%">
+								 <img class="contact-img" src="images/dancircle.png" style="width: 75%">
 							 </div>
 					  </div>
 	  			</div>

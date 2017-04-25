@@ -6,13 +6,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <?php
 session_start();
-if(!isset($_SESSION['employeefirstName'])){
+if(!isset($_SESSION['firstName'])){
 	session_unset();
 	session_destroy();
 	header('Location: login.php');
 	exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -145,6 +146,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</div>
 						</div>
 					</li>
+					<li class="grid"><a href="about.php">About</a>
 					<!--li class="grid"><a href="typo.html">Typo</a></li-->
 					<!--
 					<div class="mepanel" style="width: 115px; margin-left: 265px;">

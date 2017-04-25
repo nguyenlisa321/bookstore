@@ -29,18 +29,19 @@ if(isset($_POST["email"])){
 	}
 
 	if(preg_match("/@delk.com/", $email)){
-		$smt = $conn->prepare("Select fname, lname from Employee where email=? and password=?");
+		$smt = $conn->prepare("Select fname, lname, position from Employee where email=? and password=?");
 	    $smt->bind_param("ss", $email, $passwordHashed);
 		$smt->execute();
 		$smt->store_result();
 		if($smt->num_rows > 0){
-			$smt->bind_result($fname, $lname);
+			$smt->bind_result($fname, $lname, $position);
 			$smt->fetch();
 			$smt->close();
 	    	$conn->close();
-	    	$_SESSION['employeefirstName'] = $fname;
-	    	$_SESSION['employeelastName'] = $lname;
-	    	$_SESSION['employeeEmail'] = $email;
+		    $_SESSION['employeefirstName'] = $fname;
+			$_SESSION['employeelastName'] = $lname;
+			$_SESSION['employeeEmail'] = $email;
+			$_SESSION['employeePosition'] = $position;
 	    	header('Location: employeedash.php');
 	    	exit;
 		}else{

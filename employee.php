@@ -1,9 +1,13 @@
 <?php
 session_start();
+
 if(!isset($_SESSION['employeefirstName'])){
 	session_unset();
 	session_destroy();
 	header('Location: login.php');
+	exit();
+}else if($_SESSION['employeePosition'] == "General"){
+	header('Location: employeedash.php');
 	exit();
 }
 
@@ -49,7 +53,7 @@ $password="";
 $position="";
 $salary="";
 
-if(isset($_POST["edit"])){
+if(isset($_POST["edit"]) && $_SESSION['employeePosition'] == "Owner"){
 	 $email = $_POST["employeeEmail"];
 	 $sql = "Select * FROM Employee";
 	 $result = $db->query($sql) or die($db->error);
@@ -63,8 +67,8 @@ if(isset($_POST["edit"])){
      }
       $db->close();
 
-}else if(isset($_POST["delete"])){
-
+}else if(isset($_POST["delete"]) && $_SESSION['employeePosition'] == "Owner"){
+	
 	 $email = $_POST["employeeEmail"];
      $sql = "Delete FROM Employee Where email = '$email' " ;
      if ($db->query($sql) === TRUE) {
@@ -73,10 +77,10 @@ if(isset($_POST["edit"])){
         $errormessage1 = "Unsuccesful Delete";
      }
       $db->close();
+	
 
-
-}else if(isset($_POST["add"])){
-
+}else if(isset($_POST["add"]) && $_SESSION['employeePosition'] == "Owner"){
+		
 	$tempfname = $_POST["fname"];
 	if(preg_match("/^[a-zA-Z-]+$/", $tempfname)){
 		$fname = strtoupper($tempfname);
@@ -166,7 +170,7 @@ if(isset($_POST["edit"])){
 	if(strlen($fnameError)==0 && strlen($lnameError)==0 && strlen($addressError)==0  && strlen($cityError)==0 && strlen($zipcodeError)==0 && strlen($phonenumberError)==0 && strlen($emailError)==0){
 		$smt = $db->prepare("INSERT INTO Employee (fname, lname, address, city, state, zipcode, phonenumber, email, password, position, salary) VALUES (?,?,?,?,?,?,?,?,?,?,?)" );
 	    $smt->bind_param("sssssiisssd", $fname, $lname, $address, $city, $state, $zipcode, $phonenumber, $email, $passwordHashed, $position, $salary);
-		if ($smt->execute()) {
+		if ($smt->execute()) { 
 			$successmessage3 = "Inserted '$email' ";
 		} else {
 			$errormessage3 = "Email already in use";
@@ -174,8 +178,10 @@ if(isset($_POST["edit"])){
 	    $smt->close();
 	    $db->close();
 	}
-}else{
-
+}else if ((isset($_POST["edit"]) || isset($_POST['delete']) || isset($_POST['add'])) && $_SESSION['employeePosition'] != "Owner" ){
+	$errormessage1 = "Only owner has privelege.";
+	$errormessage2 = "Only owner has privelege.";
+	$errormessage3 = "Only owner has privelege.";
 }
 
 ?>
@@ -312,8 +318,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<!--		</div>
 						</div>
 					</li> -->
-					<li class="grid"><a href="employee.php">Employees</a></li>
-					<li class="grid"><a href="publisher.php">Publishers</a>
+					<?php 
+					if ($_SESSION['employeePosition'] != "General"){
+					echo '<li class="grid"><a href="employee.php">Employees</a></li>';
+					echo '<li class="grid"><a href="publisher.php">Publishers</a>';
+					}?>
+
 					<!--
 					<div class="mepanel" style="width: 115px; margin-left: 265px;">
 							<div class="row">
@@ -446,7 +456,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									$result = $conn->query($sql);
 
 									while($row = $result->fetch_assoc()){
-										echo '<option value = "' . $row['email']  . '"/>' . $row['fname'] . '</option>';
+										echo '<option value = "' . $row['email']  . '"/>' . $row['email'] . '</option>';
 									}
 									$conn->close();
 									?>

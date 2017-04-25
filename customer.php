@@ -17,17 +17,16 @@ if(!isset($_SESSION['employeefirstName'])){
 <script>
 	$(document).ready(function() {
 		$( "#searchCustomerNameinput" ).change(function() {
-		
 			$.ajax({
 				url: 'searchCustomerName.php', 
-				data: {searchCustomerName: $( "#searchCustomerNameinput" ).val()},
+				data: {searchCustomerName: $( "#searchCustomerNameinput" ).val(),
+					   serverName: "<?php echo $_SESSION['employeeServer']?>"},
 				success: function(data){
 					$('#searchCustomerNameresult').html(data);	
 				
 				}
 			});
 		});
-		
 	});
 </script>
 
@@ -160,8 +159,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<!--		</div>
 						</div>
 					</li> -->
-					<li class="grid"><a href="employee.php">Employees</a></li>
-					<li class="grid"><a href="publisher.php">Publishers</a>
+					<?php 
+					if ($_SESSION['employeePosition'] != "General"){
+					echo '<li class="grid"><a href="employee.php">Employees</a></li>';
+					echo '<li class="grid"><a href="publisher.php">Publishers</a>';
+					}?>
 					<!--
 					<div class="mepanel" style="width: 115px; margin-left: 265px;">
 							<div class="row">

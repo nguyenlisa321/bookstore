@@ -1,6 +1,6 @@
 <?php
         $servername = "stardock.cs.virginia.edu";
-        $username = "cs4750s17elk2fw";
+        $username =  $_GET['serverName'];
         $serverpassword ="cs4750";
         $dbname = "cs4750s17elk2fw";
 

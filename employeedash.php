@@ -38,6 +38,21 @@ $conn->close();
 <!DOCTYPE html>
 <html>
 <head>
+<script src="js/js/jquery-1.6.2.min.js" type="text/javascript"></script> 
+<script src="js/js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
+<script>
+	$(document).ready(function() {
+		$( "#query" ).change(function() {
+			$.ajax({
+				url: 'runQuery.php',
+				data: {textQuery: $( "#query" ).val(), serverName: "<?php echo $_SESSION['employeeServer']?>" },
+				success: function(data){
+					$('#displaytable1').html(data);
+				}
+			});
+		});
+	});
+</script>
 <title>DELK's Books: The best online shop to find your books</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <!-- Custom Theme files -->
@@ -168,8 +183,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<!--		</div>
 						</div>
 					</li> -->
-					<li class="grid"><a href="employee.php">Employees</a></li>
-					<li class="grid"><a href="publisher.php">Publishers</a>
+					<?php 
+					if ($_SESSION['employeePosition'] != "General"){
+					echo '<li class="grid"><a href="employee.php">Employees</a></li>';
+					echo '<li class="grid"><a href="publisher.php">Publishers</a>';
+					}?>
 					<!--
 					<div class="mepanel" style="width: 115px; margin-left: 265px;">
 							<div class="row">
@@ -235,7 +253,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<h1><a href="modifyPersonal.php"><span class="label label-info">Modify Personal Information</span></a></h1>
 			</div>
 		</p>
-</div>
+		<br></br>
+		<hr COLOR="black" NOSHADE></hr>
+		<br></br>
+		<p> Run own queries </p>
+		<input type= "search" id = "query" placeholder ="Select * From..." />
+		<br></br>
+		<div id  = "displaytable1">
+		Nothing
+		</div>
+	</div>
 </div>
 <!---->
 <!---->

@@ -5,6 +5,9 @@ if(!isset($_SESSION['employeefirstName'])){
 	session_destroy();
 	header('Location: login.php');
 	exit();
+}else if($_SESSION['employeePosition'] == "General"){
+	header('Location: employeedash.php');
+	exit();
 }
 
 $servername = "stardock.cs.virginia.edu";
@@ -49,7 +52,7 @@ $password="";
 $position="";
 $salary="";
 
-if(isset($_POST["edit"])){
+if(isset($_POST["edit"]) && $_SESSION['employeePosition'] == "Owner"){
 	 $email = $_POST["employeeEmail"];
 	 $sql = "Select * FROM Employee";
 	 $result = $db->query($sql) or die($db->error);
@@ -63,7 +66,7 @@ if(isset($_POST["edit"])){
      }
       $db->close();
 
-}else if(isset($_POST["delete"])){
+}else if(isset($_POST["delete"]) && $_SESSION['employeePosition'] == "Owner"){
 	
 	 $email = $_POST["employeeEmail"];
      $sql = "Delete FROM Employee Where email = '$email' " ;
@@ -75,7 +78,7 @@ if(isset($_POST["edit"])){
       $db->close();
 	
 
-}else if(isset($_POST["add"])){
+}else if(isset($_POST["add"]) && $_SESSION['employeePosition'] == "Owner"){
 		
 	$tempfname = $_POST["fname"];
 	if(preg_match("/^[a-zA-Z-]+$/", $tempfname)){
@@ -174,8 +177,10 @@ if(isset($_POST["edit"])){
 	    $smt->close();
 	    $db->close();
 	}
-}else{
-
+}else if ((isset($_POST["edit"]) || isset($_POST['delete']) || isset($_POST['add'])) && $_SESSION['employeePosition'] != "Owner" ){
+	$errormessage1 = "Only owner has privelege.";
+	$errormessage2 = "Only owner has privelege.";
+	$errormessage3 = "Only owner has privelege.";
 }
 
 ?>
@@ -312,8 +317,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<!--		</div>
 						</div>
 					</li> -->
-					<li class="grid"><a href="employee.php">Employees</a></li>
-					<li class="grid"><a href="publisher.php">Publishers</a>
+					<?php 
+					if ($_SESSION['employeePosition'] != "General"){
+					echo '<li class="grid"><a href="employee.php">Employees</a></li>';
+					echo '<li class="grid"><a href="publisher.php">Publishers</a>';
+					}?>
 					<!--
 					<div class="mepanel" style="width: 115px; margin-left: 265px;">
 							<div class="row">

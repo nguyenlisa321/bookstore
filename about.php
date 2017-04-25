@@ -5,13 +5,15 @@ License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <?php
+
 session_start();
-if(!isset($_SESSION['firstName'])){
+if(!isset($_SESSION['firstName']) && !isset($_SESSION['employeefirstName'])){
 	session_unset();
 	session_destroy();
 	header('Location: login.php');
 	exit();
 }
+
 ?>
 
 <!DOCTYPE html>

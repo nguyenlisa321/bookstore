@@ -8,29 +8,9 @@ if(!isset($_SESSION['firstName'])){
 	exit();
 }
 
-if(!isset($_POST["reviewtext"])){
-$servername = "stardock.cs.virginia.edu";
-$username = "cs4750s17elk2fw";
-$serverpassword ="cs4750";
-$dbname = "cs4750s17elk2fw";
+$errormessage = "";
 
-$conn = new mysqli($servername, $username, $serverpassword, $dbname);
-if($conn->connect_error){
-	die("Connection failed: ". $conn->connect_error);
-}
-$email = $_SESSION['email'];
-$sql = "SELECT ISBN FROM Buys where ISBN NOT IN(SELECT ISBN FROM Reviews where email = '$email') AND email = '$email'" ;
-
-$result = $conn->query($sql);
-if($result->num_rows==0){
-	$conn->close();
-	header('Location: member.php');
-	exit;
-}else{
-	$conn->close();
-}
-
-}else{
+if(isset($_POST["reviewtext"])){
 	$servername = "stardock.cs.virginia.edu";
 	$username = "cs4750s17elk2fw";
 	$serverpassword ="cs4750";
@@ -46,11 +26,16 @@ if($result->num_rows==0){
 
 	$smt = $conn->prepare("INSERT INTO Reviews (email, ISBN, review_text, rating, review_date) VALUES (?,?,?,?,?) " );
     $smt->bind_param("sssis", $_SESSION["email"], $_POST["bookISBN"], $_POST["reviewtext"], $_POST["rating"], $date);
-    $smt->execute();
-    $smt->close();
-    $conn->close();
-    header( 'Location: member.php' ) ;
-    exit;
+    if(!$smt->execute()){
+    	$errormessage = "Review already exist for this book. Can't add review.";
+    	$smt->close();
+	    $conn->close();
+    }else{
+	    $smt->close();
+	    $conn->close();
+	    header( 'Location: member.php' ) ;
+	    exit;
+    }
 }
 
 ?>
@@ -352,6 +337,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <legend>Write a Review </legend>
                 <br>
                 <div>
+                <?php
+                if(isset($errormessage)){
+                	echo '<span style="color: red;">' . $errormessage . '</span>'; 
+                	echo '<br></br>';
+                } ?>
 				Book Title: 
 				<select name = "bookISBN">
                 <?php 
@@ -365,7 +355,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					die("Connection failed: ". $conn->connect_error);
 				}
 				$email = $_SESSION['email'];
-				$sql = "Select DISTINCT ISBN, Title FROM Books NATURAL JOIN (SELECT * FROM Buys where ISBN NOT IN(SELECT ISBN FROM Reviews where email = '$email') AND email = '$email') AS table_2" ;
+				$sql = "SELECT ISBN, Title FROM Books Natural JOIN (Select Distinct ISBN From Buys where email = '$email') AS `table2`";
 
 				$result = $conn->query($sql);
 

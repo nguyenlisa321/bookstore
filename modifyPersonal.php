@@ -217,51 +217,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 			 <!---->		 
 			 <div class="top-nav">
-				<ul class="memenu skyblue" style="width: 120%""><li class="active"><a href="index.php">Home</a></li>
+				<?php 
+				if(isset($_SESSION['email'])){
+				echo '<ul class="memenu skyblue" style="width: 120%""><li class="active"><a href="index.php">Home</a></li>
 					<li class="grid"><a href="product.php">Books</a>
-						<!--div class="mepanel">
-							<div class="row">
-								<div class="col1 me-one">
-									<h4>Shop</h4>
-									<ul>
-										<li><a href="product.html">New Arrivals</a></li>
-										<li><a href="product.html">Home</a></li>
-									
-										<li><a href="product.html">Decorates</a></li>
-										<li><a href="product.html">Accessories</a></li>
-										<li><a href="product.html">Kids</a></li>
-										<li><a href="product.html">Login</a></li>
-										<li><a href="product.html">Brands</a></li>
-										<li><a href="product.html">My Shopping Bag</a></li>
-									</ul>
-								</div>
-								<div class="col1 me-one">
-									<h4>Type</h4>
-									<ul>
-										<li><a href="product.html">Diwali Lights</a></li>
-										<li><a href="product.html">Tube Lights</a></li>
-										<li><a href="product.html">Bulbs</a></li>
-										<li><a href="product.html">Ceiling Lights</a></li>
-										<li><a href="product.html">Accessories</a></li>
-										<li><a href="product.html">Lanterns</a></li>
-									</ul>	
-								</div>
-								<div class="col1 me-one">
-									<h4>Popular Brands</h4>
-									<ul>
-										<li><a href="product.html">Everyday</a></li>
-										<li><a href="product.html">Philips</a></li>
-										<li><a href="product.html">Havells</a></li>
-										<li><a href="product.html">Wipro</a></li>
-										<li><a href="product.html">Jaguar</a></li>
-										<li><a href="product.html">Ave</a></li>
-										<li><a href="product.html">Gold Medal</a></li>
-										<li><a href="product.html">Anchor</a></li>
-									</ul>	
-								</div>
-							</div>
-						</div>
-					</li-->
 					<li class="grid"><a href="#">Genres</a>
 						<div class="mepanel" style="width: 115px; margin-left: 160px;">
 							<div class="row">
@@ -276,53 +235,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										
 									</ul>
 								</div>
-								<!--div class="col1 me-one">
-									<h4>Type</h4>
-									<ul>
-										<li><a href="product.html">Diwali Lights</a></li>
-										<li><a href="product.html">Tube Lights</a></li>
-										<li><a href="product.html">Bulbs</a></li>
-										<li><a href="product.html">Ceiling Lights</a></li>
-										<li><a href="product.html">Accessories</a></li>
-										<li><a href="product.html">Lanterns</a></li>
-									</ul>	
-								</div>
-								<div class="col1 me-one">
-									<h4>Popular Brands</h4>
-									<ul>
-										<li><a href="product.html">Everyday</a></li>
-										<li><a href="product.html">Philips</a></li>
-										<li><a href="product.html">Havells</a></li>
-										<li><a href="product.html">Wipro</a></li>
-										<li><a href="product.html">Jaguar</a></li>
-										<li><a href="product.html">Ave</a></li>
-										<li><a href="product.html">Gold Medal</a></li>
-										<li><a href="product.html">Anchor</a></li>										
-									</ul>	
-								</div-->
 							</div>
 						</div>
 					</li>
-					<!--li class="grid"><a href="typo.html">Typo</a></li-->
-					<li class="grid"><a href="about.php">About</a>
-					<!--
-					<div class="mepanel" style="width: 115px; margin-left: 265px;">
-							<div class="row">
-								<div class="col1 me-one">	
-									<ul>
-										<li><a href="product.html">Contact</a></li>
-										<li><a href="product.html">About Us</a></li>
-									</ul>
-								</div>
-								</div>
-								</div>-->
-					</li>	
+					<li class="grid"><a href="about.php">About</a></li>';
+					} else {
+					echo '<ul class="memenu skyblue" style="width: 140%">
+					<li class="grid"><a href="customer.php">Customers</a>
+					<li class="grid"><a href="book.php">Books</a>';
+					if ($_SESSION['employeePosition'] != "General"){
+					echo '<li class="grid"><a href="employee.php">Employees</a></li>';
+					echo '<li class="grid"><a href="publisher.php">Publishers</a>';
+					}
+				}
+					?>
 					<?php 
 					if(isset($_SESSION["firstName"])){
 						echo '<li class="grid"><a href="member.php">Account</a> </li>';
 						echo '<div style="margin-top: 3%; margin-left: 80%;"> Welcome Customer ' . $_SESSION["firstName"] . ' ' . $_SESSION["lastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ;
 					}else if(isset($_SESSION["employeefirstName"])){
-						echo '<li class="grid"><a style="width: 130px; height: 97px;" href="member.php">Employee Dashboard </a> </li>';
+						echo '<li class="grid"><a style="width: 130px; height: 97px;" href="employeedash.php">Employee Dashboard </a> </li>';
 						echo '<div style="margin-top: 3%; margin-left: 80%;"> Welcome Employee ' . $_SESSION["employeefirstName"] . ' ' . $_SESSION["employeelastName"] . '   (<a href="login.php?logout=true">Logout</a>) </div>' ; 
 					}else{
 						echo '<div style="margin-top: 5.5%; margin-left: 50%;"> <a href="account.php">Sign Up</a>	or  <a href="login.php">Log In</a></div>';

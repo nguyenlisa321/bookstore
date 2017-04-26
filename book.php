@@ -29,6 +29,7 @@ if(isset($_POST["delete"])){
         $errormessage = "Unsuccesful Delete";
      }
 }else if(isset($_POST["add"])){
+	if(isset($_POST['addquantity']) && $_POST['addquantity'] > 0) {
      $sql = "Select * FROM Books where ISBN = " . $_POST['bookISBN'];
      $result = $db->query($sql);
      $row = $result->fetch_assoc();
@@ -67,6 +68,9 @@ if(isset($_POST["delete"])){
         $errormessage = "Unsuccesful Increase";
         $db->close();
      }
+ }else{
+ 	$errormessage = "Give a quantity by which to increase the book by";
+ }
 }else{
 }
 
@@ -414,7 +418,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </select>
         <br></br>
         Quantity:
-        <input type="number" name="addquantity" placeholder="0" min="0" max="1000" required/>
+        <input type="number" name="addquantity" placeholder="0" min="0" max="1000"/>
         <br></br>
 	  	<!--<button id="add">Increase</button>
 	  	<button id="delete">Delete</button>-->

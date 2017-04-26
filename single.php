@@ -315,7 +315,7 @@ $(document).ready(function() {
 	  	<hr COLOR="black" NOSHADE></hr>
 	  	<div class="container">
 	  	<h4>Name: <?php echo $arr['Name'] ?></h4> 
-	  	<h4>Phone: <?php echo "(".substr($arr['Phone'], 0, 3).") ".substr($arr['Phone'], 3, 3)."-".substr($arr['Phone'],6) ?></h4> 
+	  	<h4>Phone: <?php echo "(".substr($arr['Phonenumber'], 0, 3).") ".substr($arr['Phonenumber'], 3, 3)."-".substr($arr['Phonenumber'],6) ?></h4> 
 	  	<h4>Email: <?php echo $arr['Email'] ?></h4> 
 	  	</br> 
 	  	<p><?php echo $arr['Bio'] ?>

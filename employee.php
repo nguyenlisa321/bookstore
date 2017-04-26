@@ -463,7 +463,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</select>
 							<br></br>
 							Salary:
-							<input type="number" name="editsalary" placeholder="0" min="0" max="100000" required/>
+							<input type="number" name="editsalary" placeholder="0" min="0" max="10000000" required/>
 							<br><br>
 							<button name="edit" value="edit" class="btn btn-default">Update</button>
 							</form>

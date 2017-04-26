@@ -33,19 +33,39 @@ if(isset($_POST["delete"])){
      $result = $db->query($sql);
      $row = $result->fetch_assoc();
      $currentquantity = $row["Quantity"];
-		 $publisher = $row["Publisher"];
+	 $publisher = $row["Publisher"];
      $newquantity = intval($currentquantity) + intval($_POST['addquantity']);
      $sql = "Update Books SET Quantity = " . $newquantity . " Where ISBN = " . $_POST['bookISBN'] . "";
-		 $sql2 = "UPDATE Publishers INNER JOIN Books ON Publishers.Publisher = Books.Publisher SET Orders = Orders + 1 WHERE Books.Publisher = '$publisher'";
-		 if ($db->query($sql) === TRUE) {
-        $successmessage = "Increased " . $_POST["bookISBN"] . " by " . $_POST["addquantity"];
+	 $sql2 = "UPDATE Publishers INNER JOIN Books ON Publishers.Publisher = Books.Publisher SET Orders = Orders + 1 WHERE Books.Publisher = '$publisher'";
+	if ($db->query($sql) === TRUE) {
+        //$successmessage = "Increased " . $_POST["bookISBN"] . " by " . $_POST["addquantity"];
+        if ($db->query($sql2) === TRUE) {
+        //$successmessage = "Increased '$publisher' order by 1";
+        	$sql = "Select email from Publishers where Publisher = '" . $publisher . "'";
+        	$results =  $db->query($sql);
+            $row = $results->fetch_assoc();
+            $publisher = $row['email'];
+        	$sql = "Select count(*) AS `count` from Orders";
+            $results =  $db->query($sql);
+            $row = $results->fetch_assoc();
+            $transactionid = intval($row['count']) + 1;
+            date_default_timezone_set('EST');
+            $date = date("Y-m-d");
+			$sql = "Insert into Orders (OrderID, ISBN, Date, Quantity, EmployeeEmail, PublisherEmail) Values ('$transactionid','" . $_POST['bookISBN'] ."','$date', '" . $_POST['addquantity'] . "', '". $_SESSION['employeeEmail'] . "','$publisher') ";
+            if ($db->query($sql) === TRUE) {
+            	$successmessage = "Increased " . $_POST["bookISBN"] . " by " . $_POST["addquantity"];
+                $db->close();
+             }else{
+                $errormessage = $db->error;
+                $db->close();
+             }
+     	} else {
+        	$errormessage = "Unsuccesful Increase";
+        	$db->close();
+     	}
      } else {
         $errormessage = "Unsuccesful Increase";
-     }
-		 if ($db->query($sql2) === TRUE) {
-        $successmessage = "Increased '$publisher' order by 1";
-     } else {
-        $errormessage = "Unsuccesful Increase";
+        $db->close();
      }
 }else{
 }
